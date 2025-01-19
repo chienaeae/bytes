@@ -13,6 +13,15 @@ Frontend:
 - HMR (Hot Module Replacement)
 - ESLint
 
+Backend:
+
+- TypeScript
+- Node.js
+- Express
+- Zod
+- OpenAPI
+- Pino (logger)
+
 ### 🔧 Development Tools
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
@@ -69,9 +78,39 @@ pnpm -F web run build
 ```bash
 pnpm -F web run lint       # check lint
 pnpm -F web run lint:fix   # check and fix lint
-pnpm -F web run format     # check format
-pnpm -F web run format:fix # check and fix format
 pnpm -F web run test       # run test
+```
+
+## 🗿 Running backend project
+
+### Setup Environment Variables
+
+- Create .env: Copy .env.example to .env
+- Update .env: Fill in necessary environment variables
+
+### Development Mode
+
+```bash
+pnpm -F server run dev
+```
+
+- Starts the development server
+
+### Build for Production
+
+```bash
+pnpm -F server run build
+```
+
+- Compiles and minifies for production
+- When build is done, the run `pnpm -F server run start` to start the server
+
+### More useful commands
+
+```bash
+pnpm -F server run lint       # check lint
+pnpm -F server run lint:fix   # check and fix lint
+pnpm -F server run test       # run test
 ```
 
 ## 🔧 Development Workflow
