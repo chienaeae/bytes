@@ -16,9 +16,9 @@ Frontend:
 ### 🔧 Development Tools
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
-    - Uses [Babel](https://babeljs.io/) for Fast Refresh
+  - Uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)
-    - Uses [SWC](https://swc.rs/) for Fast Refresh
+  - Uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## 🏁 Getting Started
 
@@ -87,19 +87,19 @@ pnpm -F web run test       # run test
 
 1. Fork the repository
 2. Create your feature branch
-    ```bash
-    git checkout -b [YourName][Date]
-    # Example: git checkout -b Nina1231
-    ```
+   ```bash
+   git checkout -b [YourName][Date]
+   # Example: git checkout -b Nina1231
+   ```
 3. Commit your changes
-    ```bash
-    git commit -m 'Add some AmazingFeature'
-    ```
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
 4. Push to the branch
-    ```bash
-    git push origin [YourName][Date]
-    # Example: git push origin Nina1231
-    ```
+   ```bash
+   git push origin [YourName][Date]
+   # Example: git push origin Nina1231
+   ```
 5. Open a Pull Request
 
 ### Branch Naming Convention
