@@ -1,12 +1,21 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './App.tsx';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import HomePage from './pages/HomePage/index.tsx';
+import NotFoundPage from './pages/NotFoundPage.tsx';
+import Navbar from './components/Navbar.tsx';
 
-console.log('main.tsx');
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <App />
+        <BrowserRouter>
+            <Routes>
+                <Route element={<Navbar />}>
+                    <Route index element={<HomePage />} />
+                </Route>
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+        </BrowserRouter>
     </StrictMode>
 );
