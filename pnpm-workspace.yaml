@@ -5,3 +5,5 @@ packages:
   - 'packages/shared'
   # web frontend application
   - 'apps/web'
+  # web backend application
+  - 'apps/server'
