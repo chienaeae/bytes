@@ -1,6 +1,5 @@
 import eslint from '@eslint/js';
-import tsParser from '@typescript-eslint/parser';
-import pluginPretter from 'eslint-plugin-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
 
@@ -10,10 +9,9 @@ const tsConfig = tseslint.config(eslint.configs.recommended, tseslint.configs.re
   languageOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    parser: tsParser,
   },
   plugins: {
-    prettier: pluginPretter,
+    prettier: pluginPrettier,
     'simple-import-sort': simpleImportSort,
   },
   rules: {

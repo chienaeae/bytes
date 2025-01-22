@@ -1,5 +1,5 @@
 import eslint from '@eslint/js';
-import pluginPretter from 'eslint-plugin-prettier';
+import pluginPrettier from 'eslint-plugin-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -21,7 +21,7 @@ const tsConfig = tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      prettier: pluginPretter,
+      prettier: pluginPrettier,
       'simple-import-sort': simpleImportSort,
     },
     rules: {
