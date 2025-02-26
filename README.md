@@ -2,7 +2,7 @@
 
 ## 🚀 Project Overview
 
-Welcome to this Hackathon 2025 project! This innovative solution was developed during an intense hackathon, showcasing cutting-edge technology and creative problem-solving.
+Welcome to our `Hackathon 2025` project! This innovative solution was developed during an intense hackathon, showcasing cutting-edge technology and creative problem-solving.
 
 ## 🛠 Tech Stack
 
