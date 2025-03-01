@@ -1,9 +1,3 @@
 packages:
-  # ui components library
-  - 'packages/ui'
-  # shared utilities library
-  - 'packages/shared'
   # web frontend application
   - 'apps/web'
-  # web backend application
-  - 'apps/server'
