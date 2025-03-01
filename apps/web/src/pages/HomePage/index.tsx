@@ -18,7 +18,8 @@ export default function HomePage() {
           en
         </button>
       </div>
-      {t('title')}
+      <h1>{import.meta.env.VITE_APP_NAME}</h1>
+      <h2>{t('title')}</h2>
     </div>
   );
 }
