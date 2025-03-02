@@ -145,4 +145,8 @@
   ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-scrollbar-thumb border-[1px] border-transparent border-solid bg-clip-padding;
   }
+
+  .animate-confetti {
+    animation: confetti 3s ease-in-out forwards;
+  }
 }
