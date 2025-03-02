@@ -36,7 +36,7 @@ export function NewsCarousel() {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="container mx-auto px-10 py-8">
       <h2 className="text-2xl font-bold mb-6 text-center">NEWS</h2>
       <Carousel
         opts={{

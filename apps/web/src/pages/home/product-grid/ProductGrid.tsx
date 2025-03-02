@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/button';
+import { NavLink } from 'react-router';
 
-import { ProductCard } from '.';
+import { ProductCard } from '@/components/card/ProductCard';
+import { Button } from '@/components/ui/button';
 
 export function ProductGrid() {
   // Sample data - replace with your actual data
@@ -14,9 +15,11 @@ export function ProductGrid() {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
         {items.map((item, index) => (
-          <ProductCard key={index} {...item} />
+          <NavLink to={`/product/${index}`} className="w-full h-full">
+            <ProductCard key={index} {...item} />
+          </NavLink>
         ))}
       </div>
       <div className="flex justify-center">
