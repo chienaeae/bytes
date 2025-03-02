@@ -98,10 +98,10 @@ export function Header({ hideSearch = false }: HeaderProps) {
               About
             </NavLink>
             <NavLink
-              to="/contact"
+              to="/contact-us"
               className="text-md font-medium transition-colors hover:text-primary"
             >
-              Contact
+              Contact Us
             </NavLink>
             <ModeToggle />
           </nav>
@@ -145,10 +145,10 @@ export function Header({ hideSearch = false }: HeaderProps) {
                   About
                 </NavLink>
                 <NavLink
-                  to="/contact"
+                  to="/contact-us"
                   className="text-md font-medium transition-colors hover:text-primary"
                 >
-                  Contact
+                  Contact Us
                 </NavLink>
               </nav>
               <div className="flex-grow"></div>

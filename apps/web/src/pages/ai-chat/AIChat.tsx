@@ -13,7 +13,7 @@ interface ChatMessage {
   role: 'user' | 'assistant';
 }
 
-export function AiChat() {
+export function AiChatPage() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
