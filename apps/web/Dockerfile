@@ -9,12 +9,9 @@ WORKDIR /hackthon2025
 RUN npm install -g pnpm
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/web/package.json apps/web/
+COPY apps/web/package.json ./apps/web/
 
 RUN pnpm install --frozen-lockfile
-
-ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
 
 COPY . .
 
