@@ -5,6 +5,8 @@ services:
       dockerfile: apps/web/Dockerfile
     ports:
       - '5000:80'
+    networks:
+      - dokploy-network
 
   core:
     build:
@@ -12,3 +14,9 @@ services:
       dockerfile: core/Dockerfile
     ports:
       - '8000:8000'
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true
