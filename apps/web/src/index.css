@@ -84,9 +84,9 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
+  --color-primary: oklch(67.11% 0.2188 38.18);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
+  --color-secondary: oklch(81.29% 0.202 124.08);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -94,7 +94,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
+  --color-border: oklch(28.9% 0.0264 239.9);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -119,7 +119,8 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-none;
+    @apply text-border;
   }
   body {
     @apply bg-background text-foreground;

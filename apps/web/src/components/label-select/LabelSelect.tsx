@@ -15,7 +15,7 @@ interface LabelSelectProps {
 export function LabelSelect({ label, options, onChange }: LabelSelectProps) {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium text-muted-foreground">{label}</label>
+      <label className="text-sm font-medium">{label}</label>
       <Select onValueChange={onChange}>
         <SelectTrigger className="w-full bg-background border-none">
           <SelectValue placeholder="Select option" />
