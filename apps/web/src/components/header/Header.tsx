@@ -1,24 +1,18 @@
 'use client';
 
 import { Menu, Search } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 
+import logo from '@/assets/logo.svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/components/ui/sheet';
 
-import { ScalableSearchBar } from '../search-bar/ScalableSearchBar';
 import { ModeToggle } from '../ui/mode-toggle';
 
-interface HeaderProps {
-  hideSearch?: boolean;
-}
-
-export function Header({ hideSearch = false }: HeaderProps) {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,62 +23,21 @@ export function Header({ hideSearch = false }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchContainerRef.current &&
-        !searchContainerRef.current.contains(event.target as Node) &&
-        isSearchFocused
-      ) {
-        setIsSearchFocused(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isSearchFocused]);
-
-  const handleSearchFocus = () => {
-    setIsSearchFocused(true);
-  };
-
   return (
     <>
-      {/* Overlay when search is focused */}
-      {isSearchFocused && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300"
-          onClick={() => setIsSearchFocused(false)}
-        />
-      )}
-
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-200 ${
-          isScrolled ? 'bg-background/95 backdrop-blur-sm shadow-sm' : 'bg-background'
-        } ${isSearchFocused ? 'h-24 shadow-md' : 'h-20'}`}
+        className={`sticky top-0 z-50 w-full transition-all duration-200 py-3 md:px-12 px-5 ${
+          isScrolled ? 'bg-white/30 backdrop-blur-sm shadow-sm' : 'bg-background'
+        }`}
       >
-        <div className="container flex items-center justify-between min-w-full px-12 h-full">
+        <div className="container flex items-center justify-between min-w-full">
           {/* Logo */}
-          <NavLink to="/" className="flex items-center space-x-2">
-            <span className="hidden sm:inline-block text-4xl font-extrabold tracking-tighter">
-              BITES
-            </span>
+          <NavLink to="/">
+            <img src={logo} alt="logo" className="h-10" />
           </NavLink>
 
           {/* Desktop Navigation - on the right side */}
           <nav className="hidden md:flex items-center gap-10 relative">
-            {!hideSearch && (
-              <ScalableSearchBar
-                expandedWidth="w-[400px]"
-                placeholder="Search..."
-                onFocus={handleSearchFocus}
-                focused={isSearchFocused}
-                ref={searchContainerRef}
-              />
-            )}
-            <NavLink to="/" className="text-md font-medium transition-colors hover:text-primary">
-              Home
-            </NavLink>
             <NavLink
               to="/ai-chat"
               className="text-md font-medium transition-colors hover:text-primary"
@@ -95,7 +48,7 @@ export function Header({ hideSearch = false }: HeaderProps) {
               to="/about"
               className="text-md font-medium transition-colors hover:text-primary"
             >
-              About
+              About Bites
             </NavLink>
             <NavLink
               to="/contact-us"
@@ -127,12 +80,6 @@ export function Header({ hideSearch = false }: HeaderProps) {
                   <ModeToggle />
                 </div>
                 <NavLink
-                  to="/"
-                  className="text-md font-medium transition-colors hover:text-primary"
-                >
-                  Home
-                </NavLink>
-                <NavLink
                   to="/ai-chat"
                   className="text-md font-medium transition-colors hover:text-primary"
                 >
@@ -142,7 +89,7 @@ export function Header({ hideSearch = false }: HeaderProps) {
                   to="/about"
                   className="text-md font-medium transition-colors hover:text-primary"
                 >
-                  About
+                  About Bites
                 </NavLink>
                 <NavLink
                   to="/contact-us"

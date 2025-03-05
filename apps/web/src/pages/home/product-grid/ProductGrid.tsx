@@ -14,16 +14,16 @@ export function ProductGrid() {
   });
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+    <div className="container mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {items.map((item, index) => (
           <NavLink to={`/product/${index}`} className="w-full h-full">
             <ProductCard key={index} {...item} />
           </NavLink>
         ))}
       </div>
-      <div className="flex justify-center">
-        <Button variant="ghost" className="text-sm text-muted-foreground hover:text-foreground">
+      <div className="flex justify-center my-5">
+        <Button variant="ghost" className="text-sm hover:text-border">
           SEE MORE
         </Button>
       </div>

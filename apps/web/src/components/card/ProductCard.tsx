@@ -16,7 +16,7 @@ export function ProductCard({
   imageUrl,
 }: ProductCardProps) {
   return (
-    <Card className="overflow-hidden border">
+    <Card className="overflow-hidden hover:shadow-primary shadow-md">
       <div
         className="h-48 bg-muted"
         style={{
@@ -28,7 +28,9 @@ export function ProductCard({
       <CardContent className="space-y-4 p-4">
         <div>
           <h3 className="font-semibold line-clamp-1">{title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2 break-words text-ellipsis overflow-hidden">
+            {description}
+          </p>
         </div>
         <div className="text-sm space-y-1 text-muted-foreground">
           <p>Content weight: {contentWeight}</p>

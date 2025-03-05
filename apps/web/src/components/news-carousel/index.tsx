@@ -1,11 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 export function NewsCarousel() {
   const newsItems = [
@@ -13,30 +7,30 @@ export function NewsCarousel() {
       id: 1,
       title: 'News Title 1',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing ut labore et dolore elit.',
-      image: '/placeholder.svg',
+      image: 'https://fakeimg.pl/300/?text=1',
     },
     {
       id: 2,
       title: 'News Title 2',
       description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      image: '/placeholder.svg',
+      image: 'https://fakeimg.pl/300/?text=2',
     },
     {
       id: 3,
       title: 'News Title 3',
       description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-      image: '/placeholder.svg',
+      image: 'https://fakeimg.pl/300/?text=3',
     },
     {
       id: 4,
       title: 'News Title 4',
       description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse.',
-      image: '/placeholder.svg',
+      image: 'https://fakeimg.pl/300/?text=4',
     },
   ];
 
   return (
-    <section className="container mx-auto px-10 py-8">
+    <section className="container mx-auto mb-10">
       <h2 className="text-2xl font-bold mb-6 text-center">NEWS</h2>
       <Carousel
         opts={{
@@ -58,17 +52,11 @@ export function NewsCarousel() {
                       backgroundPosition: 'center',
                     }}
                   />
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
                 </CardContent>
               </Card>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </section>
   );

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-background py-12">
+    <footer className="bg-background py-5">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between gap-8">
           {/* Left Section */}
