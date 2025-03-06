@@ -16,7 +16,11 @@ export function HomePage() {
       <div className="flex gap-10">
         <div className="w-3/7">
           {/* <SearchBar /> */}
-          <FilterForm />
+          <FilterForm
+            onChange={(selectedOptions1, selectedOptions2) => {
+              console.log(selectedOptions1, selectedOptions2);
+            }}
+          />
         </div>
         <ProductGrid />
       </div>
