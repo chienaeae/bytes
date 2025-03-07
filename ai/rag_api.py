@@ -1,140 +1,123 @@
-##############################################################################
-#Filename: rag_api.py
-#Author: Guan-Wei Huang
-#Created: 2025-02-24
-#Version: 1.0.0
-#License: MIT
-#Description: 
-#    This script sets up a Flask API for retrieving product information using 
-#    a combination of structured SQL queries and vector-based retrieval (RAG).
-#    It integrates with SQLite and ChromaDB for efficient data retrieval.
-#    
-#Contact: gwhuang24@gmail.com
-#GitHub: https://github.com/guan-wei-huang31
-###############################################################################
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from langchain_ollama import OllamaLLM, OllamaEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
-import sys
-import os
+from google import genai
+import chromadb
 from sqlalchemy import create_engine
-from sqlalchemy import text
 import pandas as pd
+import os
+from dotenv import load_dotenv
 
 # **1. Flask setup**
 app = Flask(__name__)
 CORS(app)
 
-# **2️. SQLite connection**
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "db", "functional_products.db")
-db_uri = f"sqlite:///{DB_PATH}"
+# **2.Setting Gemini API Key 
+load_dotenv()
+API_KEY = os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=API_KEY)
+
+# **3. PostgreSQL Database connection**
+
+username = os.getenv("PG_USERNAME")
+password = os.getenv("PG_PASSWORD")
+hostname = os.getenv("PG_HOST")
+database = os.getenv("PG_DATABASE")
+
+db_uri = f"postgresql://{username}:{password}@{hostname}:5432/{database}?sslmode=require"
 engine = create_engine(db_uri)
 
-# **3. Retrieve information from database**
+# **4. Retrieve information from database**
 query = """
-    SELECT product_name, weight, manufacturer, expiration_date, storage_method, 
-           delivery_time, reference_price, allergy_info, in_stock, 
-           certifications, health_description, product_details 
-    FROM Functional_Products
+    SELECT * FROM all_info
 """
 df = pd.read_sql(query, engine)
 
-# **4. Transfer to dataframe**
-df["text"] = df.apply(lambda row: f"Product Name: {row['product_name']}\n"
-                                  f"Weight: {row['weight']}g\n"
-                                  f"Manufacturer: {row['manufacturer']}\n"
-                                  f"Storage Method: {row['storage_method']}\n"
-                                  f"Stock Status: {'In Stock' if int(row['in_stock']) == 1 else 'Out of Stock'}\n"
-                                  f"Health Description: {row['health_description']}\n"
-                                  f"Product Details: {row['product_details']}\n", axis=1)
+# **5. Convert data into text format**
+df["text"] = df.apply(lambda row: f"""
+Product Overview:
+- Product ID: {row['product_id']}
+- Name: {row['product_name']}
+- Image URL: {row['product_image']}
+- Place of Origin: {row['place_of_origin']}
+- Manufacturing Location: {row['manufacturing_location']}
+- Weight & Volume: {row['weight_volume']}
+- Features & Description: {row['features_desc']}
 
-# **5. Initialize Ollama & ChromaDB**
-llm = OllamaLLM(model="mistral")
+Material Information:
+- Material Category: {row['material_cat_name']} (Category ID: {row['material_cat_id']})
+- Material Form: {row['material_form_name']} (Form ID: {row['material_form_id']})
 
-embeddings = OllamaEmbeddings(model="nomic-embed-text")
-vector_db = Chroma.from_texts(
-    df["text"].tolist(),
-    embedding=embeddings,
-    persist_directory="db",
-    collection_name="functional_products",
-    metadatas=[
-        {
-            "product_name": row["product_name"],
-            "manufacturer": row["manufacturer"],
-            "category": row.get("category", "general"),
-            "in_stock": row["in_stock"],
-        }
-        for _, row in df.iterrows()
-    ],
-)
+Health Benefits & Ingredients:
+- Health Claims: {row['healthclaim_name']}
+- Key Ingredients: {row['ingredients_name']}
 
-retriever = vector_db.as_retriever(search_kwargs={"k": 3})
+Application & Use Cases:
+- Application Name: {row['application_name']}
+- Application Description: {row['application_desc']}
 
-# **6. Prompt engineering setup**
-system_prompt =  """
-You are answering questions based on product information stored in a structured database.
-The database contains the following fields:
-- Product Name
-- Weight (grams)
-- Manufacturer
-- Expiration Date
-- Storage Method
-- Stock Status
-- Health Description
-- Certifications
-- Price
+Supplier Details:
+- Supplier Name: {row['supplier_name']}
+- Supplier Category: {row['supplier_cat_name']} (Category ID: {row['supplier_cat_id']})
+- Location: {row['supplier_city']}, {row['supplier_province_state']}, {row['supplier_country']}
+- Postal Code: {row['supplier_postalcode']}
+""", axis=1)
 
-If the question asks for structured information (such as price, manufacturer, stock status), retrieve it using the database.
-If the question asks for general product descriptions, retrieve information from the vector database.
+# **6. Define embedding model**
+def get_embedding(text):
+    response = client.models.embed_content(
+        model="models/text-embedding-004",
+        contents=text,
+    )
+    return response.embeddings[0].values
 
-Always answer concisely and only provide relevant information.
-\n\n{context}
-"""
-prompt_template = ChatPromptTemplate.from_messages(
-    [
-        ("system", system_prompt),
-        ("user", "Question: {input}"),
-    ]
-)
+# **7. Process vectorDB **
+vector_db = chromadb.PersistentClient(path="./chroma_db")
+vector_db.delete_collection(name="functional_products")
+collection = vector_db.get_or_create_collection(name="functional_products")
 
-# **7. Setup RAG flow**
-document_chain = create_stuff_documents_chain(llm, prompt_template)   ## Combine prompt engineering + user query + vectorDB, assign llm
-retrieval_chain = create_retrieval_chain(retriever, document_chain)   ## invoke llm, based on document_chain and retriever
 
-# **8. SQL structure data**
-def query_product_info(product_name, column):
-    query = text(f"SELECT {column} FROM Functional_Products WHERE product_name = :product_name")
+for _, row in df.iterrows():
+    embedding_vector = get_embedding(row["text"])
+    collection.add(
+        ids=[str(row["product_name"])], 
+        embeddings=[embedding_vector], 
+        documents=[row["text"]]
+    )
 
-    with engine.connect() as connection:
-        result = connection.execute(query, {"product_name": product_name}).fetchone()
+# **8. Retrieve from vectorDB **
+def retrieve_from_vector_db(input_text):
+    query_embedding = get_embedding(input_text)
+    results = collection.query(query_embeddings=[query_embedding], n_results=5)
+
+    if not results["documents"] or not results["documents"][0]:
+        return "No relevant information found."
+
+    return results["documents"][0]
+
+# **9. Prompt engineering setup**
+def ask_gemini(context, input_text):
+    prompt =  f"""
+    You are an AI assistant answering product-related questions. 
+    Use the following retrieved product information to generate a concise response.
+
+    Below is the relevant product information retrieved from the database: "{context}"
+
+    The user asked: "{input_text}"
     
-    return result[0] if result else "I don't know."
+    If the context contains the answer, reply concisely using the provided details.
+    If the context does not have the answer, say: "I'm sorry, I don't have enough details."
 
-# **9. Query Rewriting (vague query)**
-def rewrite_query(input_text, last_product):
-    vague_phrases = ["this product", "it", "the price", "the weight", "certifications"]
-    if last_product:
-        for phrase in vague_phrases:
-            if phrase in input_text.lower():
-                input_text = input_text.lower().replace(phrase, f"the {last_product}")
-                print(f"\n🔄 Rewritten question: {input_text}")
-                break
-    return input_text
+    Always keep the response within 30 words.
+    """
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=[prompt])
+    return response.candidates[0].content.parts[0].text.strip()
 
-# **10. Memorize previous question**
-context = []
-last_product = None
-
-# **11. Flask API**
+# **10. Flask API**
 @app.route("/ask", methods=["POST"])
 def ask_question():
-    global last_product, context   # Store user's `last_product` and `context`
 
     data = request.json
     input_text = data.get("question", "").strip()
@@ -142,37 +125,12 @@ def ask_question():
     if not input_text:
         return jsonify({"error": "No question provided"}), 400
 
-    # **Step 1: Query Rewriting**
-    input_text = rewrite_query(input_text, last_product)
+    retrieval_results = retrieve_from_vector_db(input_text)
+    context = retrieval_results if retrieval_results else []
 
-    # **Step 2: SQL Query Execution**
-    structured_questions = {
-        "price": "reference_price",
-        "manufacturer": "manufacturer",
-        "expiration": "expiration_date",
-        "stock": "in_stock",
-    }
-    
-    for key, column in structured_questions.items():
-        if key in input_text.lower():
-            if last_product:
-                answer = query_product_info(last_product, column)
-                return jsonify({"answer": answer, "product_name": last_product})
+    answer = ask_gemini(context, input_text)
 
-    #  **Step 3: Vector Search (ChromaDB)**
-    response = retrieval_chain.invoke({"input": input_text, "context": context})
-    answer = response["answer"]
-
-    # **Step 4: Store `last_product` for multi-turn conversation support**
-    for product in df["product_name"].tolist():
-        if product.lower() in answer.lower():
-            last_product = product
-            break 
-
-    # **Step 5: Store `context`**
-    context = response.get("context", [])
-
-    return jsonify({"answer": answer, "last_product": last_product})
+    return jsonify({"answer": answer})
 
 # **Start Flask API**
 if __name__ == "__main__":
