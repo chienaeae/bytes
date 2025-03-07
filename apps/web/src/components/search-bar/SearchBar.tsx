@@ -14,8 +14,8 @@ export function SearchBar({ value, onChange, onSearch, variant = 'top' }: Search
   return (
     <div
       className={cn(
-        'flex items-center content-around max-w-2xl w-sm px-5 py-1 rounded-full border shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] ',
-        variant === 'top' && 'absolute top-[63%] md:right-[13%] lg:right-[18%] max-w-2xl w-sm',
+        'flex items-center content-around w-sm px-5 py-1 rounded-full border shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] ',
+        variant === 'top' && 'absolute top-[63%] right-[13%] 2xl:right-[18%]',
         variant === 'bottom' && 'w-full mb-5'
       )}
     >
