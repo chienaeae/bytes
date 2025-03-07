@@ -1,16 +1,37 @@
 import { Search } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
-export function SearchBar() {
+interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+  onSearch?: (value: string) => void;
+  variant?: 'top' | 'bottom';
+}
+
+export function SearchBar({ value, onChange, onSearch, variant = 'top' }: SearchBarProps) {
   return (
-    <div className="absolute top-[63%] md:right-[13%] lg:right-[18%] max-w-2xl w-sm">
+    <div
+      className={cn(
+        'flex items-center content-around max-w-2xl w-sm px-5 py-1 rounded-full border shadow-[5px_5px_10px_#d1d9e6,-5px_-5px_10px_#ffffff] ',
+        variant === 'top' && 'absolute top-[63%] md:right-[13%] lg:right-[18%] max-w-2xl w-sm',
+        variant === 'bottom' && 'w-full mb-5'
+      )}
+    >
+      <Search className="h-5 w-5 mr-3" onClick={() => onSearch?.(value)} />
       <Input
         type="search"
-        placeholder="SEARCH"
-        className="w-full h-12 pl-5 rounded-full bg-muted/50 border-none placeholder:text-muted-foreground/50 placeholder:font-medium focus-visible:ring-2 transition-all duration-300"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && onSearch) {
+            onSearch(value);
+          }
+        }}
+        placeholder="search..."
+        className="text-border !text-[16px] placeholder:text-gray-400 focus-visible:ring-0 shadow-none p-0"
       />
-      <Search className="absolute right-5 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/50 cursor-pointer" />
     </div>
   );
 }

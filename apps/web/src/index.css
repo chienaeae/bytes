@@ -119,11 +119,15 @@
 
 @layer base {
   * {
-    @apply border-none;
     @apply text-border;
   }
   body {
     @apply bg-background text-foreground;
+  }
+  input,
+  div,
+  img {
+    @apply border-none;
   }
 }
 

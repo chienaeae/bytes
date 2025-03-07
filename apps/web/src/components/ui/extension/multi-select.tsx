@@ -1,7 +1,7 @@
 'use client';
 
 import { Command as CommandPrimitive } from 'cmdk';
-import { Check, X as RemoveIcon } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, X as RemoveIcon } from 'lucide-react';
 import React, {
   createContext,
   forwardRef,
@@ -203,7 +203,7 @@ const MultiSelector = ({
 
 const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => {
-    const { value, onValueChange, activeIndex } = useMultiSelect();
+    const { value, onValueChange, activeIndex, open } = useMultiSelect();
 
     const mousePreventDefault = useCallback((e: React.MouseEvent) => {
       e.preventDefault();
@@ -214,7 +214,7 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
       <div
         ref={ref}
         className={cn(
-          'flex flex-wrap gap-1 p-1 py-2 ring-1 ring-muted rounded-lg bg-background',
+          'flex flex-wrap gap-1 p-1 py-2 ring-1 ring-muted rounded-lg bg-background relative',
           {
             'ring-1 focus-within:ring-ring': activeIndex === -1,
           },
@@ -245,6 +245,11 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
           </Badge>
         ))}
         {children}
+        {open ? (
+          <ChevronUp className="w-4 h-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        ) : (
+          <ChevronDown className="w-4 h-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        )}
       </div>
     );
   }
