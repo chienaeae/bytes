@@ -4,7 +4,6 @@ import { ProductCard } from '@/components/card/ProductCard';
 import { Button } from '@/components/ui/button';
 
 export function ProductGrid() {
-  // Sample data - replace with your actual data
   const items = Array(6).fill({
     title: 'XXXXXXXXXXXXX',
     description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
@@ -23,7 +22,7 @@ export function ProductGrid() {
         ))}
       </div>
       <div className="flex justify-center my-5">
-        <Button variant="ghost" className="text-sm hover:text-border">
+        <Button variant="ghost" className="text-white text-sm rounded-full bg-primary">
           SEE MORE
         </Button>
       </div>

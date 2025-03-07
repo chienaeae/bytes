@@ -39,12 +39,6 @@ export function Header() {
           {/* Desktop Navigation - on the right side */}
           <nav className="hidden md:flex items-center gap-10 relative">
             <NavLink
-              to="/ai-chat"
-              className="text-md font-medium transition-colors hover:text-primary"
-            >
-              Ask AI
-            </NavLink>
-            <NavLink
               to="/about"
               className="text-md font-medium transition-colors hover:text-primary"
             >
