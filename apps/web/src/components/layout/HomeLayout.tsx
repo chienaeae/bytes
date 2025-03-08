@@ -17,7 +17,6 @@ export function HomeLayout() {
       <main>
         <Outlet />
       </main>
-      <div className="outline w-full"></div>
       <Footer />
     </div>
   );

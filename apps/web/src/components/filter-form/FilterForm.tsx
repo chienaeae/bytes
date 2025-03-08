@@ -39,7 +39,7 @@ export function FilterForm({ value, onChange, filterOptions, onClearAll }: Filte
         <button
           type="button"
           onClick={onClearAll}
-          className="text-primary hover:bg-white/50 py-1 px-2 rounded-full text-sm"
+          className="text-primary hover:bg-white/90 py-1 px-2 rounded-full text-sm"
         >
           Clear All
         </button>

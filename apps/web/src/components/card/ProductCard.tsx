@@ -28,12 +28,14 @@ export function ProductCard({
       <CardContent className="space-y-4 p-4">
         <div>
           <h3 className="font-semibold line-clamp-1">{title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 break-words text-ellipsis overflow-hidden">
+          <p className="min-h-10 text-sm text-muted-foreground line-clamp-2 break-words text-ellipsis overflow-hidden">
             {description}
           </p>
         </div>
         <div className="text-sm space-y-1 text-muted-foreground">
-          <p>Content weight: {contentWeight}</p>
+          <p className="line-clamp-1 break-words text-ellipsis overflow-hidden">
+            Content weight: {contentWeight}
+          </p>
           <p>Best before: {bestBefore}</p>
         </div>
       </CardContent>

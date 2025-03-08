@@ -246,9 +246,9 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
         ))}
         {children}
         {open ? (
-          <ChevronUp className="w-4 h-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <ChevronUp className="w-4 h-4 absolute right-2 bottom-3 text-muted-foreground pointer-events-none" />
         ) : (
-          <ChevronDown className="w-4 h-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <ChevronDown className="w-4 h-4 absolute right-2 bottom-3 text-muted-foreground pointer-events-none" />
         )}
       </div>
     );
