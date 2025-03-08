@@ -227,11 +227,11 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
             key={item}
             className={cn(
               'px-1 rounded-xl flex items-center gap-1',
-              activeIndex === index && 'ring-2 ring-muted-foreground '
+              activeIndex === index && 'ring-2 ring-muted-foreground'
             )}
             variant={'secondary'}
           >
-            <span className="text-xs">{item}</span>
+            <span className="text-xs dark:text-black">{item}</span>
             <button
               aria-label={`Remove ${item} option`}
               aria-roledescription="button to remove option"
@@ -240,7 +240,7 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
               onClick={() => onValueChange(item)}
             >
               <span className="sr-only">Remove {item} option</span>
-              <RemoveIcon className="h-4 w-4 hover:stroke-destructive" />
+              <RemoveIcon className="h-4 w-4 dark:stroke-black hover:stroke-destructive" />
             </button>
           </Badge>
         ))}
