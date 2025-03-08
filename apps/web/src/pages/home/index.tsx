@@ -1,19 +1,26 @@
 import { useRef, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 import main_banner from '@/assets/main_banner.png';
 import { FilterForm } from '@/components/filter-form/FilterForm';
 import { NewsCarousel } from '@/components/news-carousel';
 import { SearchBar } from '@/components/search-bar/SearchBar';
+import { FilterKey, FilterOptionItem, SelectedFilterOptions } from '@/model/filter-option';
 
 import { ProductGrid } from './product-grid/ProductGrid';
+import { useProducts } from './useProducts';
+
+const initialFilterOptions: SelectedFilterOptions = {};
 
 export function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 250);
   const filterFormRef = useRef<HTMLDivElement>(null);
+  const [selectedFilterOptions, setSelectedFilterOptions] =
+    useState<SelectedFilterOptions>(initialFilterOptions);
 
   const handleSearch = (keyword: string, shouldScroll = false) => {
     setSearchTerm(keyword);
-
     if (shouldScroll && filterFormRef.current) {
       const navbarHeight = document.getElementById('navbar')?.offsetHeight || 80;
       const targetOffset =
@@ -22,6 +29,15 @@ export function HomePage() {
       window.scrollTo({ top: targetOffset, behavior: 'smooth' });
     }
   };
+
+  const handleSelectedFilterOptionsChange = (key: FilterKey, newValues: FilterOptionItem[]) => {
+    setSelectedFilterOptions((prev) => ({ ...prev, [key]: newValues }));
+  };
+
+  const { filterOptions, products } = useProducts({
+    searchTerm: debouncedSearchTerm,
+    selectedFilterOptions,
+  });
 
   return (
     <div className="container mx-auto">
@@ -46,17 +62,18 @@ export function HomePage() {
         <div className="w-3/7" ref={filterFormRef}>
           <SearchBar
             value={searchTerm}
-            onChange={setSearchTerm}
+            onChange={handleSearch}
             onSearch={() => handleSearch(searchTerm, true)}
             isBottom={true}
           />
           <FilterForm
-            onChange={(selectedOption) => {
-              console.log(selectedOption);
-            }}
+            filterOptions={filterOptions}
+            value={selectedFilterOptions}
+            onChange={handleSelectedFilterOptionsChange}
+            onClearAll={() => setSelectedFilterOptions(initialFilterOptions)}
           />
         </div>
-        <ProductGrid />
+        <ProductGrid products={products} />
       </div>
     </div>
   );

@@ -1,31 +1,31 @@
 import asyncio
 import json
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.responses import StreamingResponse
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from fastapi.middleware.cors import CORSMiddleware
 
-class Settings(BaseSettings):
-    app_name: str = "UNKNOWN"
-    cors_origins: list[str] = []
+from core.api.routes import products, products_with_filter
+from core.config import settings
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-settings = Settings()
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+api_router = APIRouter()
+api_router.include_router(products.router)
+api_router.include_router(products_with_filter.router)
+
+app.include_router(api_router)
 
 @app.get("/")
 async def root():
-    print(settings.cors_origins)
-    return {"message": f"Hello! This is {settings.app_name}"}
+    return {"message": f"Hello! This is {settings.APP_NAME}"}
 
 messages = """Hello, how has your day been? 
 
