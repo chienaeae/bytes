@@ -16,13 +16,13 @@ import { Command, CommandEmpty, CommandItem, CommandList } from '@/components/ui
 import { cn } from '@/lib/utils';
 
 interface MultiSelectorProps extends React.ComponentPropsWithoutRef<typeof CommandPrimitive> {
-  values: string[];
-  onValuesChange: (value: string[]) => void;
+  values: { id: string; name: string }[];
+  onValuesChange: (value: { id: string; name: string }[]) => void;
   loop?: boolean;
 }
 
 interface MultiSelectContextProps {
-  value: string[];
+  value: { id: string; name: string }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onValueChange: (value: any) => void;
   open: boolean;
@@ -68,7 +68,7 @@ const MultiSelector = ({
   const [selectedValue, setSelectedValue] = React.useState('');
 
   const onValueChangeHandler = useCallback(
-    (val: string) => {
+    (val: { id: string; name: string }) => {
       if (value.includes(val)) {
         onValueChange(value.filter((item) => item !== val));
       } else {
@@ -224,22 +224,22 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
       >
         {value.map((item, index) => (
           <Badge
-            key={item}
+            key={item.id}
             className={cn(
               'px-1 rounded-xl flex items-center gap-1',
               activeIndex === index && 'ring-2 ring-muted-foreground'
             )}
             variant={'secondary'}
           >
-            <span className="text-xs dark:text-black">{item}</span>
+            <span className="text-xs dark:text-black">{item.name}</span>
             <button
-              aria-label={`Remove ${item} option`}
+              aria-label={`Remove ${item.name} option`}
               aria-roledescription="button to remove option"
               type="button"
               onMouseDown={mousePreventDefault}
               onClick={() => onValueChange(item)}
             >
-              <span className="sr-only">Remove {item} option</span>
+              <span className="sr-only">Remove {item.name} option</span>
               <RemoveIcon className="h-4 w-4 dark:stroke-black hover:stroke-destructive" />
             </button>
           </Badge>
@@ -331,7 +331,9 @@ MultiSelectorList.displayName = 'MultiSelectorList';
 
 const MultiSelectorItem = forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
-  { value: string } & React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
+  Omit<React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>, 'value'> & {
+    value: { id: string; name: string };
+  }
 >(({ className, value, children, ...props }, ref) => {
   const { value: Options, onValueChange, setInputValue } = useMultiSelect();
 
@@ -340,7 +342,7 @@ const MultiSelectorItem = forwardRef<
     e.stopPropagation();
   }, []);
 
-  const isIncluded = Options.includes(value);
+  const isIncluded = Options.some((option) => option.id === value.id);
   return (
     <CommandItem
       ref={ref}
@@ -350,7 +352,7 @@ const MultiSelectorItem = forwardRef<
         setInputValue('');
       }}
       className={cn(
-        'rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between ',
+        'rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between',
         className,
         isIncluded && 'opacity-50 cursor-default',
         props.disabled && 'opacity-50 cursor-not-allowed'

@@ -2,21 +2,27 @@ import { NavLink } from 'react-router';
 
 import { ProductCard } from '@/components/card/ProductCard';
 import { Button } from '@/components/ui/button';
+import { Product } from '@/model/product';
 
-export function ProductGrid() {
-  const items = Array(6).fill({
-    title: 'XXXXXXXXXXXXX',
-    description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-    contentWeight: 'XXX',
-    bestBefore: 'XXXX-XX-XX',
-    imageUrl: '/placeholder.svg',
-  });
+interface ProductGridProps {
+  products: Product[];
+}
+
+export function ProductGrid({ products }: ProductGridProps) {
+  const items = products.map((product) => ({
+    id: product.productId,
+    title: product.productName,
+    description: product.featuresDesc,
+    contentWeight: product.weightVolume,
+    bestBefore: 'xxx',
+    imageUrl: product.productImage ?? '',
+  }));
 
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {items.map((item, index) => (
-          <NavLink to={`/product/${index}`} className="w-full h-full">
+          <NavLink to={`/product/${item.id}`} className="w-full h-full" key={item.id}>
             <ProductCard key={index} {...item} />
           </NavLink>
         ))}
