@@ -31,7 +31,7 @@ class ProductFilterResponse(BaseSchema):
     products: list[ProductDetail]
     filter_options: list[Filter]
 
-@router.get("/", response_model=ProductFilterResponse)
+@router.get("", response_model=ProductFilterResponse)
 async def get_products(
     session: SessionDep,
     keyword: Optional[str] = Query(default=None, description="keyword"),
