@@ -1,12 +1,14 @@
-import { Mic, Paperclip } from 'lucide-react';
 import { useRef, useState } from 'react';
-import React from 'react';
 
-import { Button } from '@/components/ui/button';
+import { ChatResizeTextarea } from '@/components/chat/chat-resize-textarea/ChatResizeTextarea';
 import { ChatBubble, ChatBubbleAvatar, ChatBubbleMessage } from '@/components/ui/chat/chat-bubble';
 import { ChatMessageList } from '@/components/ui/chat/chat-message-list';
-
-import { ChatResizeTextarea } from '../../components/chat/chat-resize-textarea/ChatResizeTextarea';
+import {
+  ExpandableChat,
+  ExpandableChatBody,
+  ExpandableChatFooter,
+  ExpandableChatHeader,
+} from '@/components/ui/chat/expandable-chat';
 
 interface ChatMessage {
   id: string;
@@ -15,7 +17,7 @@ interface ChatMessage {
   isLoading?: boolean;
 }
 
-export function AiChatPage() {
+export default function ChatSupport() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -39,6 +41,7 @@ export function AiChatPage() {
       role: 'assistant',
     },
   ]);
+
   const [isStreaming, setIsStreaming] = useState(false);
   const eventSourceRef = useRef<EventSource | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -105,12 +108,21 @@ export function AiChatPage() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col bg-muted/40 outline-1 outline-border rounded-2xl">
-      <div className="flex-1 w-full overflow-y-hidden">
+    <ExpandableChat size="lg" position="bottom-right">
+      <ExpandableChatHeader className="flex-col text-center justify-center">
+        <h1 className="text-xl font-semibold">Chat with our AI ✨</h1>
+        <p>Ask any question for our AI to answer</p>
+        {/*** Add your utility button here! ***
+        <div className="flex gap-2 items-center pt-2">
+          <Button variant="secondary">New Chat</Button>
+          <Button variant="secondary">See FAQ</Button>
+        </div> */}
+      </ExpandableChatHeader>
+      <ExpandableChatBody>
         <ChatMessageList ref={messagesContainerRef} className="scrollbar">
           {messages.map((message) => (
             <ChatBubble key={message.id} variant={message.role === 'user' ? 'sent' : 'received'}>
-              <ChatBubbleAvatar fallback={message.role === 'user' ? 'US' : 'AI'} />
+              <ChatBubbleAvatar fallback={message.role === 'user' ? 'U' : '🤖'} />
               <ChatBubbleMessage
                 variant={message.role === 'user' ? 'sent' : 'received'}
                 isLoading={message.isLoading}
@@ -120,8 +132,8 @@ export function AiChatPage() {
             </ChatBubble>
           ))}
         </ChatMessageList>
-      </div>
-      <div className="px-4 pb-4">
+      </ExpandableChatBody>
+      <ExpandableChatFooter>
         <form
           onSubmit={handleSubmit}
           className="relative rounded-lg bg-background focus-within:ring-2 focus-within:ring-ring outline-1 outline-border"
@@ -131,7 +143,9 @@ export function AiChatPage() {
             onKeyDown={handleKeyDown}
             value={message}
             onChange={setMessage}
+            minLength={2}
           />
+          {/*** Add your utility button here! ***
           <div className="flex items-center py-2">
             <Button variant="ghost" size="icon">
               <Paperclip className="size-4" />
@@ -141,9 +155,9 @@ export function AiChatPage() {
               <Mic className="size-4" />
               <span className="sr-only">Use Microphone</span>
             </Button>
-          </div>
+          </div> */}
         </form>
-      </div>
-    </div>
+      </ExpandableChatFooter>
+    </ExpandableChat>
   );
 }

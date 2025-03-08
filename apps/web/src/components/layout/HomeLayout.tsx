@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
 
+import ChatSupport from '@/components/chat/ChatSupport';
 import Footer from '@/components/footer/Footer';
 import { Header } from '@/components/header/Header';
 
@@ -16,6 +17,7 @@ export function HomeLayout() {
       <Header />
       <main>
         <Outlet />
+        <ChatSupport />
       </main>
       <div className="outline w-full"></div>
       <Footer />
