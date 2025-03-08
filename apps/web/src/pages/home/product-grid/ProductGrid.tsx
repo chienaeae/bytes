@@ -15,7 +15,7 @@ export function ProductGrid({ products }: ProductGridProps) {
     description: product.featuresDesc,
     contentWeight: product.weightVolume,
     bestBefore: 'xxx',
-    imageUrl: product.productImage ?? '',
+    imageUrl: '',
   }));
 
   return (
