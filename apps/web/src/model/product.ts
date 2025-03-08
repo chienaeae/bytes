@@ -8,7 +8,6 @@ import { Supplier } from '@/model/supplier';
 export interface Product {
   productId: string;
   productName: string;
-  productImage: string | null;
   placeOfOrigin: string | null;
   manufacturingLocation: string;
   weightVolume: string;

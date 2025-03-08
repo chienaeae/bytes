@@ -104,7 +104,6 @@ class HealthclaimPublic(HealthclaimBase):
 class ProductBase(BaseSchema, SQLModel):
     product_id: str = Field(alias="product_id")
     product_name: str = Field(alias="product_name")
-    product_image: Optional[str] = Field(default=None, alias="product_image")
     place_of_origin: Optional[str] = Field(default=None, alias="place_of_origin")
     manufacturing_location: str = Field(alias="manufacturing_location")
     weight_volume: str = Field(alias="weight_volume")
