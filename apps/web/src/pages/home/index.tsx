@@ -25,14 +25,21 @@ export function HomePage() {
 
   return (
     <div className="container mx-auto">
-      <div className="relative">
-        <img src={main_banner} alt="main banner" className="w-full object-cover" />
-        <SearchBar
-          value={searchTerm}
-          onChange={handleSearch}
-          onSearch={() => handleSearch(searchTerm, true)}
-          variant="top"
-        />
+      <div className="relative bg-white p-10 flex items-center gap-16 2xl:gap-28 break-words">
+        <img src={main_banner} alt="main banner" className="w-[50%] object-cover" />
+        <div>
+          <h1 className="font-bold text-5xl dark:text-black text-balance">
+            Bridging gaps, Building sustainable food systems
+          </h1>
+          <p className="text-xl mb-6 mt-3 dark:text-black">
+            Unlocking the full potential of ingredients and partnerships
+          </p>
+          <SearchBar
+            value={searchTerm}
+            onChange={handleSearch}
+            onSearch={() => handleSearch(searchTerm, true)}
+          />
+        </div>
       </div>
       <NewsCarousel />
       <div className="flex gap-10">
@@ -41,7 +48,7 @@ export function HomePage() {
             value={searchTerm}
             onChange={setSearchTerm}
             onSearch={() => handleSearch(searchTerm, true)}
-            variant="bottom"
+            isBottom={true}
           />
           <FilterForm
             onChange={(selectedOption) => {
