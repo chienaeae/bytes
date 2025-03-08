@@ -8,7 +8,7 @@ from core.models.product import Product, ProductDetail
 
 router = APIRouter(prefix="/products", tags=["products"])
 
-@router.get("/:product_id", response_model=ProductDetail)
+@router.get("/{product_id}", response_model=ProductDetail)
 async def get_product(product_id: str, session: SessionDep):
     statement = (
         select(Product)
