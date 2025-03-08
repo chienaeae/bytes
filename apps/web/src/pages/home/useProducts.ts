@@ -1,56 +1,58 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { FilterKey } from '@/model/filter-option';
-import { FilterOptionItem } from '@/model/filter-option';
+import { FilterKey, SelectedFilterOptions } from '@/model/filter-option';
 import { FilterOption } from '@/model/filter-option';
 import { Product } from '@/model/product';
 import { getProductsWithFilter } from '@/service/core/products-with-filter';
 
+type FilterOptionParams = Record<FilterKey, string[]>;
+
 interface UseProductsProps {
   searchTerm: string;
-  selectedFilterOptions: Partial<Record<FilterKey, FilterOptionItem[]>>;
+  selectedFilterOptions: SelectedFilterOptions;
 }
 
 export const useProducts = ({ searchTerm, selectedFilterOptions }: UseProductsProps) => {
-  const [shouldUpdateOptions, setShouldUpdateOptions] = useState(false);
   const [filterOptions, setFilterOptions] = useState<FilterOption[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Should update fiter options only when searchTerm is changed
-    setShouldUpdateOptions(true);
-  }, [searchTerm]);
+  const prevSearchTerm = useRef<string | null>(null);
 
   useEffect(() => {
-    (async () => {
+    const fetchData = async () => {
       setIsLoading(true);
-      const filterOptionParams: Record<FilterKey, string[]> = Object.entries(
-        selectedFilterOptions
-      ).reduce(
-        (acc, [key, value]) => {
-          acc[key as FilterKey] = value.map((item) => item.id);
-          return acc;
-        },
-        {} as Record<FilterKey, string[]>
-      );
-      const response = await getProductsWithFilter(searchTerm, filterOptionParams);
+      try {
+        const filterOptionParams: FilterOptionParams = Object.entries(selectedFilterOptions).reduce(
+          (acc, [key, value]) => {
+            acc[key as FilterKey] = value.map((item) => item.id);
+            return acc;
+          },
+          {} as FilterOptionParams
+        );
 
-      setProducts(response.products);
+        const response = await getProductsWithFilter(searchTerm, filterOptionParams);
+        setProducts(response.products);
 
-      if (shouldUpdateOptions) {
-        setFilterOptions(response.filterOptions);
-        setShouldUpdateOptions(false);
-      }
-    })()
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
+        // Only update filterOptions when searchTerm changes
+        if (prevSearchTerm.current === null || prevSearchTerm.current !== searchTerm) {
+          setFilterOptions(response.filterOptions);
+          prevSearchTerm.current = searchTerm;
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('[useProducts] An unknown error occurred');
+        }
+      } finally {
         setIsLoading(false);
-      });
-  }, [searchTerm, selectedFilterOptions, shouldUpdateOptions]);
+      }
+    };
+
+    fetchData();
+  }, [searchTerm, selectedFilterOptions]);
 
   return { filterOptions, products, error, isLoading };
 };
