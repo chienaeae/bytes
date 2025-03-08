@@ -38,7 +38,6 @@ df["text"] = df.apply(lambda row: f"""
 Product Overview:
 - Product ID: {row['product_id']}
 - Name: {row['product_name']}
-- Image URL: {row['product_image']}
 - Place of Origin: {row['place_of_origin']}
 - Manufacturing Location: {row['manufacturing_location']}
 - Weight & Volume: {row['weight_volume']}
