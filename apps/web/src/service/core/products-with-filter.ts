@@ -25,9 +25,9 @@ const paramsSerializer = (params: Record<string, string[]>): string => {
 
 export const getProductsWithFilter = async (
   keyword: string,
-  filterOptions: Record<FilterKey, string[]>
+  filterOptions: Partial<Record<FilterKey, string[]>>
 ) => {
-  const params = { keyword, ...filterOptions };
+  const params = keyword !== '' ? { ...filterOptions, keyword } : filterOptions;
 
   const response = await axiosInstance.get<ProductWithFilter>('/products-with-filter', {
     params,

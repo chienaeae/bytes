@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import main_banner from '@/assets/main_banner.png';
@@ -19,7 +19,7 @@ export function HomePage() {
   const [selectedFilterOptions, setSelectedFilterOptions] =
     useState<SelectedFilterOptions>(initialFilterOptions);
 
-  const handleSearch = (keyword: string, shouldScroll = false) => {
+  const handleSearch = useCallback((keyword: string, shouldScroll = false) => {
     setSearchTerm(keyword);
     if (shouldScroll && filterFormRef.current) {
       const navbarHeight = document.getElementById('navbar')?.offsetHeight || 80;
@@ -28,11 +28,14 @@ export function HomePage() {
 
       window.scrollTo({ top: targetOffset, behavior: 'smooth' });
     }
-  };
+  }, []);
 
-  const handleSelectedFilterOptionsChange = (key: FilterKey, newValues: FilterOptionItem[]) => {
-    setSelectedFilterOptions((prev) => ({ ...prev, [key]: newValues }));
-  };
+  const handleSelectedFilterOptionsChange = useCallback(
+    (key: FilterKey, newValues: FilterOptionItem[]) => {
+      setSelectedFilterOptions((prev) => ({ ...prev, [key]: newValues }));
+    },
+    []
+  );
 
   const { filterOptions, products } = useProducts({
     searchTerm: debouncedSearchTerm,
