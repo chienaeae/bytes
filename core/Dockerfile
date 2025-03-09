@@ -36,4 +36,6 @@ EXPOSE 8000
 
 WORKDIR /
 
+RUN mkdir -p /chroma_db && chown -R appuser:appuser /chroma_db
+
 CMD ["uvicorn", "core.main:app", "--host", "0.0.0.0", "--port", "8000"]
