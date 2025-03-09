@@ -42,8 +42,6 @@ export function HomePage() {
     selectedFilterOptions,
   });
 
-  console.log('products', products);
-
   return (
     <div className="container mx-auto">
       <div className="relative bg-white p-10 flex items-center gap-16 2xl:gap-28 break-words">

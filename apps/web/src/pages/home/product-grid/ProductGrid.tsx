@@ -22,8 +22,6 @@ export function ProductGrid({ products }: ProductGridProps) {
 
   const visibleProducts = showAll ? items : items.slice(0, 9);
 
-  console.log('visibleProducts', visibleProducts);
-
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
