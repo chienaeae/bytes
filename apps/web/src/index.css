@@ -160,12 +160,14 @@
   }
 
   .shadow-neumorphic {
+    background-color: color-mix(in oklab, var(--border) 5%, transparent);
     box-shadow:
       inset 3px 3px 6px 0px var(--tw-shadow-dark),
       inset -3px -3px 6px 1px var(--tw-shadow-light) !important;
+    transition: all 0.2s ease-in-out;
   }
 
-  .hover\:shadow-float:hover {
+  .shadow-float:hover {
     box-shadow: var(--primary) 0px 13px 27px -4px;
   }
 }

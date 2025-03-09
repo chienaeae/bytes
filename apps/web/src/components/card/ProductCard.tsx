@@ -16,7 +16,7 @@ export function ProductCard({
   imageUrl,
 }: ProductCardProps) {
   return (
-    <Card className="overflow-hidden hover:shadow-float transition-shadow dark:shadow-border dark:shadow-md">
+    <Card className="overflow-hidden shadow-float transition-shadow dark:shadow-border dark:shadow-md">
       <div
         className="h-48 bg-muted"
         style={{

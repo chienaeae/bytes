@@ -37,7 +37,7 @@ export function ProductGrid({ products }: ProductGridProps) {
         <div className="flex justify-center my-5">
           <Button
             variant="ghost"
-            className="text-white text-sm rounded-full bg-primary"
+            className="text-sm font-bold rounded-full hover:bg-primary hover:text-white shadow-neumorphic"
             onClick={() => setShowAll(true)}
           >
             SEE MORE

@@ -14,7 +14,7 @@ export function SearchBar({ value, onChange, onSearch, isBottom = false }: Searc
   return (
     <div
       className={cn(
-        'flex items-center content-around w-sm px-5 py-1 rounded-full bg-border/5 placeholder:text-muted-300 shadow-neumorphic dark:caret-black',
+        'flex items-center content-around w-sm px-5 py-1 rounded-full placeholder:text-muted-300 shadow-neumorphic dark:caret-black',
         isBottom && 'w-full mb-5 dark:bg-black dark:caret-white'
       )}
     >
