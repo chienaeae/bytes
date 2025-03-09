@@ -27,7 +27,7 @@ export function Header() {
     <>
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-200 py-3 md:px-12 px-5 ${
-          isScrolled ? 'bg-white/30 backdrop-blur-sm shadow-sm' : 'bg-background'
+          isScrolled ? 'bg-white/30 backdrop-blur-sm shadow-sm dark:bg-black/30' : 'bg-background'
         }`}
       >
         <div className="container flex items-center justify-between min-w-full">
