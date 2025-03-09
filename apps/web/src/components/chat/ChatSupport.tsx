@@ -9,6 +9,7 @@ import {
   ExpandableChatFooter,
   ExpandableChatHeader,
 } from '@/components/ui/chat/expandable-chat';
+import { streamChat } from '@/service/core/chat';
 
 interface ChatMessage {
   id: string;
@@ -43,10 +44,9 @@ export default function ChatSupport() {
   ]);
 
   const [isStreaming, setIsStreaming] = useState(false);
-  const eventSourceRef = useRef<EventSource | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isStreaming) return;
 
@@ -65,39 +65,34 @@ export default function ChatSupport() {
       };
       return [...prev, userMessage, assistantMessage];
     });
+
+    const currentQuestion = message;
     setMessage('');
     setIsStreaming(true);
 
-    const eventSource = new EventSource(import.meta.env.VITE_API_URL + '/mock-chat');
-    eventSourceRef.current = eventSource;
-    eventSource.onmessage = (event) => {
-      setMessages((prev) => {
-        const lastMessage = prev[prev.length - 1];
-        if (lastMessage.role === 'assistant') {
-          const updatedMessage = {
-            ...lastMessage,
-            content: lastMessage.content + JSON.parse(event.data).m,
-            isLoading: false,
-          };
-          return [...prev.slice(0, -1), updatedMessage];
-        }
-        return prev;
+    try {
+      await streamChat(currentQuestion, {
+        onStart: () => {
+          setIsStreaming(true);
+        },
+        onMessage: (message) => {
+          setMessages((prev) => {
+            const lastMessage = prev[prev.length - 1];
+            return [
+              ...prev.slice(0, -1),
+              { ...lastMessage, content: lastMessage.content + message, isLoading: false },
+            ];
+          });
+        },
+        onComplete: () => {
+          setIsStreaming(false);
+        },
       });
-    };
-
-    const closeEventSource = () => {
+    } catch (error) {
+      console.error('Stream error:', error);
+    } finally {
       setIsStreaming(false);
-      eventSource.close();
-      eventSourceRef.current = null;
-    };
-
-    eventSource.addEventListener('complete', () => {
-      closeEventSource();
-    });
-    eventSource.onerror = (err) => {
-      console.error('SSE error:', err);
-      closeEventSource();
-    };
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

@@ -1,14 +1,64 @@
 import asyncio
 import json
 from fastapi import APIRouter, FastAPI
+from fastapi.concurrency import asynccontextmanager
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-
-from core.api.routes import products, products_with_filter
+from sqlalchemy import select
+from sqlmodel import Session
+from sqlalchemy.orm import joinedload
+from google import genai
+from core.models.product import Product, ProductDetail
+from core.vector_db import vector_session
+from core.db import engine
+from core.api.routes import chat, products, products_with_filter
 from core.config import settings
 
+def prepare_vector_db():
+    with Session(engine) as session:
+        collection = vector_session.get_product_collection()
 
-app = FastAPI()
+        ai_client = genai.Client(api_key=settings.GOOGLE_API_KEY)
+
+        products = session.scalars(statement=select(Product).options(
+            joinedload(Product.material_cat),
+            joinedload(Product.material_form),
+            joinedload(Product.applications),
+            joinedload(Product.ingredients),
+            joinedload(Product.suppliers),
+            joinedload(Product.healthclaims)
+        )).unique().all()
+
+        if (len(products) == 0):
+            print("No products found")
+            exit()
+
+        for product in products:
+            product_detail = ProductDetail.from_orm(product)
+            data = product_detail.model_dump(mode="json", by_alias=True)
+            data_str = json.dumps(data)
+            
+            embedding_vectors = ai_client.models.embed_content(
+                model="models/text-embedding-004",
+                contents=data_str,
+            ).embeddings[0].values
+
+            collection.add(
+                ids=[str(product.product_id)], 
+                embeddings=[embedding_vectors], 
+                documents=[data_str]
+            )
+        
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    prepare_vector_db()
+    print("Vector database prepared")
+    yield
+    vector_session.clean_up()
+    print("Vector database cleaned up")
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,47 +70,6 @@ app.add_middleware(
 api_router = APIRouter()
 api_router.include_router(products.router)
 api_router.include_router(products_with_filter.router)
+api_router.include_router(chat.router)
 
 app.include_router(api_router)
-
-@app.get("/")
-async def root():
-    return {"message": f"Hello! This is {settings.APP_NAME}"}
-
-messages = """Hello, how has your day been? 
-
-When you see this message, you should know it is a mock response. 
-The real response is coming soon. Hope you have a good day! 
-
-I can give a paragraph from Shakespeare's works. 
-Here is the paragraph:
-
-To be, or not to be, that is the question:
-Whether 'tis nobler in the mind to suffer
-The slings and arrows of outrageous fortune,
-Or to take arms against a sea of troubles
-And by opposing end them. To die: to sleep;
-No more; and by a sleep to say we end
-The heartache and the thousand natural shocks
-That flesh is heir to, 'tis a consummation"""
-
-async def mock_chat_generator():
-    await asyncio.sleep(0.5)
-    yield "event: start\ndata: start\n\n"
-    buffer = ""
-    for char in messages:
-        buffer += char
-        if (len(buffer) > 6):
-            json_data = json.dumps({"m": buffer})
-            yield f"data: {json_data}\n\n"
-            buffer = ""
-        await asyncio.sleep(0.01)
-    
-    if (buffer):
-        json_data = json.dumps({"m": buffer})
-        yield f"data: {json_data}\n\n"
-    yield "event: complete\ndata: complete\n\n"
-
-@app.get("/mock-chat")
-async def mock_chat():
-    return StreamingResponse(mock_chat_generator(), media_type="text/event-stream")
