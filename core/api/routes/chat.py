@@ -39,7 +39,7 @@ async def ask_gemini_generator(client: AIClientDep, context, input_text):
     Always keep the response within 30 words.
     """
 
-    yield json.dumps({'status': 'start'})
+    yield json.dumps({'status': 'start'}) + "\n"
     buffer = ""
     for response in client.models.generate_content_stream(
         model="gemini-2.0-flash",
@@ -47,14 +47,14 @@ async def ask_gemini_generator(client: AIClientDep, context, input_text):
     ):
         buffer += response.candidates[0].content.parts[0].text
         if (len(buffer) > 3):
-            yield json.dumps({'m': buffer})
+            yield json.dumps({'m': buffer}) + "\n"
             buffer = ""
         await asyncio.sleep(0.05)
 
     if (buffer):
-        yield json.dumps({'m': buffer})
+        yield json.dumps({'m': buffer}) + "\n"
 
-    yield json.dumps({'status': 'complete'})
+    yield json.dumps({'status': 'complete'}) + "\n"
 
 class ChatRequest(BaseModel):
     question: str
