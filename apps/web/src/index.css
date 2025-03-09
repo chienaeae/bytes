@@ -164,7 +164,6 @@
     box-shadow:
       inset 3px 3px 6px 0px var(--tw-shadow-dark),
       inset -3px -3px 6px 1px var(--tw-shadow-light) !important;
-    transition: all 0.2s ease-in-out;
   }
 
   .shadow-float:hover {
