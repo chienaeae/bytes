@@ -61,7 +61,7 @@ export default function Footer() {
       </div>
 
       <p className="text-xs text-gray-400 mt-2 text-center">
-        © 2025 Bikes Team. All rights reserved.
+        © 2025 Bites Team. All rights reserved.
       </p>
     </footer>
   );

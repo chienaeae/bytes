@@ -33,13 +33,13 @@ interface FilterFormProps {
 
 export function FilterForm({ value, onChange, filterOptions, onClearAll }: FilterFormProps) {
   return (
-    <form className="w-full p-6 rounded-lg bg-primary/50">
+    <form className="w-full p-6 rounded-lg bg-primary/70 dark:bg-primary">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-lg font-bold text-border">Filter</h1>
+        <h1 className="text-2xl font-bold text-border">Filter</h1>
         <button
           type="button"
           onClick={onClearAll}
-          className="text-primary hover:bg-white/90 py-1 px-2 rounded-full text-sm"
+          className="hover:bg-white/50 py-1 px-2 rounded-full text-sm"
         >
           Clear All
         </button>
@@ -53,7 +53,7 @@ export function FilterForm({ value, onChange, filterOptions, onClearAll }: Filte
 
           return (
             <div key={key}>
-              <p className="text-border/70 font-bold mb-2">{FilterKeyMapping[key]}</p>
+              <p className="text-border mb-2">{FilterKeyMapping[key]}</p>
               <MultiSelector
                 key={key}
                 values={selectedOptions}

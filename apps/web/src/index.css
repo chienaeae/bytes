@@ -39,6 +39,8 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --scrollbar-thumb: oklch(0.722 0 0);
+  --tw-shadow-dark: oklch(28.9% 0.0264 239.9 / 10%);
+  --tw-shadow-light: oklch(100% 0 0 / 80%);
 }
 
 .dark {
@@ -155,5 +157,15 @@
 
   .animate-confetti {
     animation: confetti 3s ease-in-out forwards;
+  }
+
+  .shadow-neumorphic {
+    box-shadow:
+      inset 3px 3px 6px 0px var(--tw-shadow-dark),
+      inset -3px -3px 6px 1px var(--tw-shadow-light) !important;
+  }
+
+  .hover\:shadow-float:hover {
+    box-shadow: var(--primary) 0px 13px 27px -4px;
   }
 }
