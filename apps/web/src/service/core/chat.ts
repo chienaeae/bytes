@@ -29,31 +29,29 @@ export const streamChat = async (
       buffer += decoder.decode(value, { stream: !done });
     }
 
-    while (true) {
-      try {
-        const parsed = JSON.parse(buffer);
+    const lines = buffer.split('\n');
 
-        if (parsed.status === 'start') {
-          handlers.onStart?.();
-        }
-        if (parsed.m) {
-          handlers.onMessage?.(parsed.m);
-        }
-        if (parsed.status === 'complete') {
-          handlers.onComplete?.();
-          done = true;
-        }
-
-        buffer = '';
-        break;
-      } catch (error) {
-        if (error instanceof SyntaxError) {
-          break;
-        } else {
-          console.error('Error parsing JSON chunk:', error);
-          break;
+    for (let i = 0; i < lines.length - 1; i++) {
+      const line = lines[i].trim();
+      if (line) {
+        try {
+          const parsed = JSON.parse(line);
+          if (parsed.status === 'start') {
+            handlers.onStart?.();
+          }
+          if (parsed.m) {
+            handlers.onMessage?.(parsed.m);
+          }
+          if (parsed.status === 'complete') {
+            handlers.onComplete?.();
+            done = true; // 如果想馬上結束串流也可以
+          }
+        } catch (error) {
+          console.error('Error parsing JSON line:', error);
         }
       }
     }
+
+    buffer = lines[lines.length - 1];
   }
 };
