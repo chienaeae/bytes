@@ -28,6 +28,9 @@ RUN pip install --no-cache-dir /wheels/* && \
 COPY core /core
 
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /core
+
+RUN mkdir -p /chroma_db && chown -R appuser:appuser /chroma_db
+
 USER appuser
 
 ENV PYTHONUNBUFFERED=1
@@ -35,7 +38,5 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 8000
 
 WORKDIR /
-
-RUN mkdir -p /chroma_db && chown -R appuser:appuser /chroma_db
 
 CMD ["uvicorn", "core.main:app", "--host", "0.0.0.0", "--port", "8000"]
