@@ -5,7 +5,8 @@ const teamMembers = [
     description:
       'Combines agricultural technology and data-driven problem-solving to develop sustainable, impactful solutions.',
     quote: 'In the dance of ingredients, I find harmony, creativity, and purpose.',
-    image: '/images/team/yu-ting.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D4D35AQEBvRFsSMhMaQ/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1737581042117?e=1742108400&v=beta&t=b6_kR-lxJKxgiQ0IqauaQJ846a5OMj3D_I5gxdCFCmA',
   },
   {
     name: 'Daniel Choi',
@@ -14,7 +15,8 @@ const teamMembers = [
       'Identifies strategic opportunities to ensure impactful, sustainable projects that thrive in the real world.',
     quote:
       'Food systems are like markets—efficiency, innovation, and sustainability drive success.',
-    image: '/images/team/daniel.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D5603AQHbHQx0AmunAA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677466441321?e=1747267200&v=beta&t=LYiwcn6EOOKr8i75XakEXrsXYAdGixebUHfsKKBxTHg',
   },
   {
     name: 'Chia-Yu (Philly) Chien',
@@ -22,7 +24,8 @@ const teamMembers = [
     description:
       'Blends creativity and precision in development, ensuring seamless integration of technology and design for user-friendly experiences.',
     quote: 'Food, like the stars, aligns perfectly when you find the right balance of flavors.',
-    image: '/images/team/philly.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D5603AQFUVr9UGMFx5A/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1704943913449?e=1747267200&v=beta&t=9rAkPrVfBgdK2JhX0u5e_cRsyiND_GHvCFpeyj7Jb2w',
   },
   {
     name: 'Nina Wang',
@@ -30,7 +33,8 @@ const teamMembers = [
     description:
       'Enhances user experience, interface interactions, and responsive design with clean, structured code for scalability and readability.',
     quote: 'For me, food is the ultimate conversation starter—bright, bold, and full of life.',
-    image: '/images/team/nina.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D5603AQE0fxp_OFRSmA/profile-displayphoto-shrink_800_800/B56ZV5hXqtGQAg-/0/1741500546085?e=1747267200&v=beta&t=0Zi_dFV3Zw8zhZ7_wfq4pUdchWKu8zVRixzOUZ8kEv4',
   },
   {
     name: 'Guan-Wei (Alan) Huang',
@@ -39,7 +43,8 @@ const teamMembers = [
       'Develops AI-driven solutions to enhance information retrieval, provide actionable insights, and advance the sustainable use of agricultural byproducts.',
     quote:
       'I approach food like an engineer—leveraging AI to design flavor structures that are precise, balanced, and innovative.',
-    image: '/images/team/alan.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D5603AQGy6A4tgayctA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1666460147259?e=1747267200&v=beta&t=V-BFjrjeKYkW5J2FCLvdbWmqMd42RW91_yEuYB_TOoY',
   },
   {
     name: 'Bonnie Wan',
@@ -47,7 +52,8 @@ const teamMembers = [
     description:
       'Creates intuitive and user-centric designs, ensuring seamless interactions and accessibility in digital products.',
     quote: 'A great dish is crafted with balance, texture, and harmony—just like great design.',
-    image: '/images/team/bonnie.jpg',
+    image:
+      'https://media.licdn.com/dms/image/v2/D5603AQGQCw7NBOpAbQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1720502404565?e=1747267200&v=beta&t=gZ0mPA9vgYTjke0KMSX8PPiTVbxQ-QiNLV9nqYxcDmI',
   },
 ];
 
