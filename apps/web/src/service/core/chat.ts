@@ -18,15 +18,21 @@ export const streamChat = async (
 
   const reader = response.body?.getReader();
   const decoder = new TextDecoder('utf-8');
+  let buffer = '';
   let done = false;
+
   while (!done) {
     const { value, done: doneReading } = await reader!.read();
     done = doneReading;
-    const chunk = decoder.decode(value, { stream: !done });
-    const lines = chunk.split('\n').filter((line) => line.trim() !== '');
-    for (const line of lines) {
+
+    if (value) {
+      buffer += decoder.decode(value, { stream: !done });
+    }
+
+    while (true) {
       try {
-        const parsed = JSON.parse(line);
+        const parsed = JSON.parse(buffer);
+
         if (parsed.status === 'start') {
           handlers.onStart?.();
         }
@@ -34,12 +40,19 @@ export const streamChat = async (
           handlers.onMessage?.(parsed.m);
         }
         if (parsed.status === 'complete') {
-          done = true;
           handlers.onComplete?.();
+          done = true;
+        }
+
+        buffer = '';
+        break;
+      } catch (error) {
+        if (error instanceof SyntaxError) {
+          break;
+        } else {
+          console.error('Error parsing JSON chunk:', error);
           break;
         }
-      } catch (error) {
-        console.error('Error parsing JSON chunk:', error);
       }
     }
   }
