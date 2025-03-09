@@ -84,13 +84,14 @@ export default function ChatSupport() {
             ];
           });
         },
-        onComplete: () => {
-          setIsStreaming(false);
-        },
       });
     } catch (error) {
       console.error('Stream error:', error);
     } finally {
+      setMessages((prev) => {
+        const lastMessage = prev[prev.length - 1];
+        return [...prev.slice(0, -1), { ...lastMessage, isLoading: false }];
+      });
       setIsStreaming(false);
     }
   };
