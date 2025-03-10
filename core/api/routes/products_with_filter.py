@@ -48,7 +48,8 @@ async def get_products(
         joinedload(Product.applications),
         joinedload(Product.ingredients),
         joinedload(Product.suppliers),
-        joinedload(Product.healthclaims)
+        joinedload(Product.healthclaims),
+        joinedload(Product.images)
     )
 
     if keyword:

@@ -1,5 +1,6 @@
 import { Application } from '@/model/application';
 import { Healthclaim } from '@/model/healthclaim';
+import { Image } from '@/model/image';
 import { Ingredient } from '@/model/ingredients';
 import { MaterialCategory } from '@/model/material-category';
 import { MaterialForm } from '@/model/material-form';
@@ -18,4 +19,5 @@ export interface Product {
   ingredients: Ingredient[];
   suppliers: Supplier[];
   healthclaims: Healthclaim[];
+  images: Image[];
 }
