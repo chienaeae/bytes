@@ -26,7 +26,8 @@ def prepare_vector_db():
             joinedload(Product.applications),
             joinedload(Product.ingredients),
             joinedload(Product.suppliers),
-            joinedload(Product.healthclaims)
+            joinedload(Product.healthclaims),
+            joinedload(Product.images)
         )).unique().all()
 
         if (len(products) == 0):

@@ -19,7 +19,8 @@ async def get_product(product_id: str, session: SessionDep):
             joinedload(Product.applications),
             joinedload(Product.ingredients),
             joinedload(Product.suppliers),
-            joinedload(Product.healthclaims)
+            joinedload(Product.healthclaims),
+            joinedload(Product.images)
         )
     )
     product = session.exec(statement=statement).unique().one_or_none()

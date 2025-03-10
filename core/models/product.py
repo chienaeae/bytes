@@ -101,6 +101,19 @@ class Healthclaim(HealthclaimBase, table=True):
 class HealthclaimPublic(HealthclaimBase):
     pass
 
+class ImageBase(BaseSchema, SQLModel):
+    image_id: str = Field(alias="image_id")
+    image_url: str = Field(alias="image_url")
+    main_image: Optional[str] = Field(default=None, alias="main_image")
+
+class Image(ImageBase, table=True):
+    __tablename__ = "image"
+    image_id: str = Field(default=None, primary_key=True)
+    product_id: str = Field(default=None, foreign_key="product.product_id")
+    product: Optional["Product"] = Relationship(back_populates="images")
+class ImagePublic(ImageBase):
+    pass
+
 class ProductBase(BaseSchema, SQLModel):
     product_id: str = Field(alias="product_id")
     product_name: str = Field(alias="product_name")
@@ -121,7 +134,7 @@ class Product(ProductBase, table=True):
     ingredients: list["Ingredients"] = Relationship(back_populates="products", link_model=ProductIngredients)
     suppliers: list["Supplier"] = Relationship(back_populates="products", link_model=ProductSupplier)
     healthclaims: list["Healthclaim"] = Relationship(back_populates="products", link_model=ProductHealthclaim)
-
+    images: list["Image"] = Relationship(back_populates="product")
 class ProductDetail(ProductBase):
     material_cat: Optional["MaterialCategoryPublic"] = None
     material_form: Optional["MaterialFormPublic"] = None
@@ -129,3 +142,4 @@ class ProductDetail(ProductBase):
     ingredients: list["IngredientsPublic"] = []
     suppliers: list["SupplierPublic"] = []
     healthclaims: list["HealthclaimPublic"] = []
+    images: list["ImagePublic"] = []
