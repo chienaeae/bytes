@@ -4,17 +4,10 @@ interface ProductCardProps {
   title: string;
   description: string;
   contentWeight: string;
-  bestBefore: string;
   imageUrl: string;
 }
 
-export function ProductCard({
-  title,
-  description,
-  contentWeight,
-  bestBefore,
-  imageUrl,
-}: ProductCardProps) {
+export function ProductCard({ title, description, contentWeight, imageUrl }: ProductCardProps) {
   return (
     <Card className="overflow-hidden shadow-float transition-shadow dark:shadow-border dark:shadow-md">
       <div
@@ -33,10 +26,7 @@ export function ProductCard({
           </p>
         </div>
         <div className="text-sm space-y-1 text-muted-foreground">
-          <p className="line-clamp-1 break-words text-ellipsis overflow-hidden">
-            Content weight: {contentWeight}
-          </p>
-          <p>Best before: {bestBefore}</p>
+          <p className="min-h-10">Content weight: {contentWeight}</p>
         </div>
       </CardContent>
     </Card>
