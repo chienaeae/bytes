@@ -59,14 +59,16 @@ export default function ProductPage() {
           <div className="w-full lg:w-2/3 space-y-8">
             <h1 className="text-3xl font-bold">{product?.productName}</h1>
             <p className="mb-3 text-wrap">{product?.featuresDesc}</p>
-            {hashtags.map((hashtag, index) => (
-              <span
-                key={index}
-                className="rounded-2xl bg-primary px-3 py-1 mr-1 text-white text-sm"
-              >
-                {hashtag}
-              </span>
-            ))}
+            <div className="flex gap-2 flex-wrap">
+              {hashtags.map((hashtag, index) => (
+                <span
+                  key={index}
+                  className="rounded-2xl bg-primary px-3 py-1 text-white text-sm whitespace-nowrap"
+                >
+                  {hashtag}
+                </span>
+              ))}
+            </div>
             <h2 className="text-xl font-bold !my-3">PRODUCT INFORMATION</h2>
             <ProductTable data={productInfo} headerBgColor="bg-secondary" />
           </div>
