@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-border font-bold mt-2 md:mt-0">Support</h3>
+            <h3 className="text-border font-bold">Support</h3>
             <ul>
               <li>
                 <NavLink to="/faq" className="text-primary hover:underline text-sm">

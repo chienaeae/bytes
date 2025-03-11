@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 
 import { ProductCard } from '@/components/card/ProductCard';
@@ -10,7 +10,13 @@ interface ProductGridProps {
 }
 
 export function ProductGrid({ products }: ProductGridProps) {
+  const hasProduct = products.length > 0;
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    setShowAll(false);
+  }, [products]);
+
   const items = products.map((product) => ({
     id: product.productId,
     title: product.productName,
@@ -26,23 +32,29 @@ export function ProductGrid({ products }: ProductGridProps) {
 
   return (
     <div className="container mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {visibleProducts.map((item, index) => (
-          <NavLink to={`/product/${item.id}`} className="w-full h-full" key={item.id}>
-            <ProductCard key={index} {...item} />
-          </NavLink>
-        ))}
-      </div>
-      {products.length > 9 && !showAll && (
-        <div className="flex justify-center my-5">
-          <Button
-            variant="ghost"
-            className="text-sm font-bold rounded-full hover:bg-primary hover:text-white shadow-neumorphic ease-in-out duration-500"
-            onClick={() => setShowAll(true)}
-          >
-            SEE MORE
-          </Button>
-        </div>
+      {hasProduct ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {visibleProducts.map((item) => (
+              <NavLink to={`/product/${item.id}`} className="w-full h-full" key={item.id}>
+                <ProductCard {...item} />
+              </NavLink>
+            ))}
+          </div>
+          {products.length > 9 && !showAll && (
+            <div className="flex justify-center my-5">
+              <Button
+                variant="ghost"
+                className="text-sm font-bold rounded-full hover:bg-primary hover:text-white shadow-neumorphic ease-in-out duration-500"
+                onClick={() => setShowAll(true)}
+              >
+                SEE MORE
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <p className="text-lg text-muted-foreground">No products found</p>
       )}
     </div>
   );
