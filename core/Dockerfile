@@ -23,7 +23,8 @@ COPY --from=builder /wheels /wheels
 COPY --from=builder /install/.env /
 
 RUN pip install --no-cache-dir /wheels/* && \
-    pip install uvicorn[standard]
+    pip install uvicorn[standard] && \
+    pip install gunicorn
 
 COPY core /core
 
@@ -39,4 +40,4 @@ EXPOSE 8000
 
 WORKDIR /
 
-CMD ["uvicorn", "core.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["gunicorn", "core.main:app", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:8000", "--timeout", "30", "--preload"]
