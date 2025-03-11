@@ -1,7 +1,7 @@
 'use client';
 
-import { MessageCircle, X } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import { MessageCircle } from 'lucide-react';
+import React, { useRef } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -37,25 +37,33 @@ interface ExpandableChatProps extends React.HTMLAttributes<HTMLDivElement> {
   icon?: React.ReactNode;
 }
 
+interface ExpandableChatProps extends React.HTMLAttributes<HTMLDivElement> {
+  position?: ChatPosition;
+  size?: ChatSize;
+  icon?: React.ReactNode;
+  isOpen: boolean;
+  toggleChat: () => void;
+}
+
 const ExpandableChat: React.FC<ExpandableChatProps> = ({
   className,
   position = 'bottom-right',
   size = 'md',
   icon,
   children,
+  isOpen,
+  toggleChat,
   ...props
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
-
-  const toggleChat = () => setIsOpen(!isOpen);
 
   return (
     <div className={cn(`fixed ${chatConfig.positions[position]} z-50`, className)} {...props}>
       <div
         ref={chatRef}
         className={cn(
-          'flex flex-col bg-background border sm:rounded-lg shadow-md overflow-hidden transition-all duration-250 ease-out sm:absolute sm:w-[90vw] sm:h-[80vh] fixed inset-0 w-full h-full sm:inset-auto',
+          'flex flex-col bg-background border sm:rounded-lg shadow-md overflow-hidden sm:absolute sm:w-[90vw] sm:h-[80vh] fixed inset-0 w-full h-full sm:inset-auto',
+          isOpen && 'transition-all duration-250 ease-out',
           chatConfig.chatPositions[position],
           chatConfig.dimensions[size],
           isOpen ? chatConfig.states.open : chatConfig.states.closed,
@@ -63,16 +71,8 @@ const ExpandableChat: React.FC<ExpandableChatProps> = ({
         )}
       >
         {children}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-2 right-2 sm:hidden"
-          onClick={toggleChat}
-        >
-          <X className="h-4 w-4" />
-        </Button>
       </div>
-      <ExpandableChatToggle icon={icon} isOpen={isOpen} toggleChat={toggleChat} />
+      {!isOpen && <ExpandableChatToggle icon={icon} isOpen={isOpen} toggleChat={toggleChat} />}
     </div>
   );
 };
@@ -114,19 +114,23 @@ const ExpandableChatToggle: React.FC<ExpandableChatToggleProps> = ({
   isOpen,
   toggleChat,
   ...props
-}) => (
-  <Button
-    variant="default"
-    onClick={toggleChat}
-    className={cn(
-      'w-14 h-14 rounded-full shadow-md flex items-center justify-center hover:shadow-lg hover:shadow-black/30 transition-all duration-300 [&_svg]:size-6',
-      className
-    )}
-    {...props}
-  >
-    {isOpen ? <X className="h-6 w-6" /> : icon || <MessageCircle className="h-6 w-6" />}
-  </Button>
-);
+}) => {
+  if (isOpen) return null;
+
+  return (
+    <Button
+      variant="default"
+      onClick={toggleChat}
+      className={cn(
+        'w-14 h-14 rounded-full shadow-md flex items-center justify-center hover:shadow-lg hover:shadow-black/30 [&_svg]:size-7 bg-primary/70',
+        className
+      )}
+      {...props}
+    >
+      {icon || <MessageCircle className="stroke-white" />}
+    </Button>
+  );
+};
 
 ExpandableChatToggle.displayName = 'ExpandableChatToggle';
 

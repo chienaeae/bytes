@@ -1,7 +1,8 @@
+import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import { ChatResizeTextarea } from '@/components/chat/chat-resize-textarea/ChatResizeTextarea';
-import { ChatBubble, ChatBubbleAvatar, ChatBubbleMessage } from '@/components/ui/chat/chat-bubble';
+import { ChatBubble, ChatBubbleMessage } from '@/components/ui/chat/chat-bubble';
 import { ChatMessageList } from '@/components/ui/chat/chat-message-list';
 import {
   ExpandableChat,
@@ -19,6 +20,7 @@ interface ChatMessage {
 }
 
 export default function ChatSupport() {
+  const [isExpanded, setIsExpanded] = useState(false);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -103,57 +105,60 @@ export default function ChatSupport() {
     }
   };
 
+  const toggleChat = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  const closeChat = () => {
+    setIsExpanded(false);
+  };
+
   return (
-    <ExpandableChat size="lg" position="bottom-right">
-      <ExpandableChatHeader className="flex-col text-center justify-center">
-        <h1 className="text-xl font-semibold">Chat with our AI ✨</h1>
-        <p>Ask any question for our AI to answer</p>
-        {/*** Add your utility button here! ***
-        <div className="flex gap-2 items-center pt-2">
-          <Button variant="secondary">New Chat</Button>
-          <Button variant="secondary">See FAQ</Button>
-        </div> */}
-      </ExpandableChatHeader>
-      <ExpandableChatBody>
-        <ChatMessageList ref={messagesContainerRef} className="scrollbar">
-          {messages.map((message) => (
-            <ChatBubble key={message.id} variant={message.role === 'user' ? 'sent' : 'received'}>
-              <ChatBubbleAvatar fallback={message.role === 'user' ? 'U' : '🤖'} />
-              <ChatBubbleMessage
-                variant={message.role === 'user' ? 'sent' : 'received'}
-                isLoading={message.isLoading}
+    <>
+      <ExpandableChat size="sm" position="bottom-right" isOpen={isExpanded} toggleChat={toggleChat}>
+        <ExpandableChatHeader className="py-3 px-4 flex flex-row items-center justify-between bg-primary/70">
+          <h1 className="text-md text-border">Chat with our AI ✨</h1>
+          <button type="button" onClick={closeChat}>
+            <X className="h-5 stroke-white hover:stroke-border" />
+          </button>
+        </ExpandableChatHeader>
+
+        {isExpanded && (
+          <>
+            <ExpandableChatBody>
+              <ChatMessageList ref={messagesContainerRef} className="scrollbar">
+                {messages.map((message) => (
+                  <ChatBubble
+                    key={message.id}
+                    variant={message.role === 'user' ? 'sent' : 'received'}
+                  >
+                    <ChatBubbleMessage
+                      variant={message.role === 'user' ? 'sent' : 'received'}
+                      isLoading={message.isLoading}
+                    >
+                      {message.content}
+                    </ChatBubbleMessage>
+                  </ChatBubble>
+                ))}
+              </ChatMessageList>
+            </ExpandableChatBody>
+            <ExpandableChatFooter>
+              <form
+                onSubmit={handleSubmit}
+                className="relative rounded-lg bg-background focus-within:ring-2 focus-within:ring-ring outline-1 outline-border"
               >
-                {message.content}
-              </ChatBubbleMessage>
-            </ChatBubble>
-          ))}
-        </ChatMessageList>
-      </ExpandableChatBody>
-      <ExpandableChatFooter>
-        <form
-          onSubmit={handleSubmit}
-          className="relative rounded-lg bg-background focus-within:ring-2 focus-within:ring-ring outline-1 outline-border"
-        >
-          <ChatResizeTextarea
-            disabled={isStreaming}
-            onKeyDown={handleKeyDown}
-            value={message}
-            onChange={setMessage}
-            minLength={2}
-          />
-          {/*** Add your utility button here! ***
-          <div className="flex items-center py-2">
-            <Button variant="ghost" size="icon">
-              <Paperclip className="size-4" />
-              <span className="sr-only">Attach file</span>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Mic className="size-4" />
-              <span className="sr-only">Use Microphone</span>
-            </Button>
-          </div> */}
-        </form>
-      </ExpandableChatFooter>
-    </ExpandableChat>
+                <ChatResizeTextarea
+                  disabled={isStreaming}
+                  onKeyDown={handleKeyDown}
+                  value={message}
+                  onChange={setMessage}
+                  minLength={2}
+                />
+              </form>
+            </ExpandableChatFooter>
+          </>
+        )}
+      </ExpandableChat>
+    </>
   );
 }
