@@ -16,8 +16,10 @@ export function ProductGrid({ products }: ProductGridProps) {
     title: product.productName,
     description: product.featuresDesc,
     contentWeight: product.weightVolume,
-    bestBefore: 'xxx',
-    imageUrl: '',
+    imageUrl:
+      product.images.find((img) => img.mainImage === '1')?.imageUrl ||
+      product.images[0]?.imageUrl ||
+      '',
   }));
 
   const visibleProducts = showAll ? items : items.slice(0, 9);
