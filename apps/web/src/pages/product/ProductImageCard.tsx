@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import { Image } from '@/model/image';
+
 interface ImagesProps {
-  images: {
-    imageId: string;
-    imageUrl: string;
-    mainImage: string | null;
-  }[];
+  images: Image[];
 }
 
 export default function ProductImageCard({ images }: ImagesProps) {

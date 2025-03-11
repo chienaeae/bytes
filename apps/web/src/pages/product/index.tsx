@@ -29,42 +29,49 @@ export default function ProductPage() {
     fetchData();
   }, [id]);
 
-  console.log(product);
+  const ingredients = product?.ingredients?.map((e) => e.ingredientsName).join(', ') ?? 'N/A';
+
+  const hashtags = [
+    ...(product?.applications?.map((e) => e.applicationName) ?? []),
+    ...(product?.healthclaims?.map((e) => e.healthclaimName) ?? []),
+    ...(product?.materialCat?.materialCatName ? [product.materialCat.materialCatName] : []),
+    ...(product?.materialForm?.materialFormName ? [product.materialForm.materialFormName] : []),
+  ];
+
   const productInfo = [
+    { label: 'Ingredients', value: ingredients ?? 'N/A' },
+    { label: 'Product Weight/Volume', value: product?.weightVolume ?? 'N/A' },
     { label: 'Supplier', value: product?.suppliers[0]?.supplierName ?? 'N/A' },
     { label: 'Place of Origin', value: product?.placeOfOrigin ?? 'N/A' },
     { label: 'Manufacturing Location', value: product?.manufacturingLocation ?? 'N/A' },
-    { label: 'Product Weight/Volume', value: product?.weightVolume ?? 'N/A' },
-    { label: 'Price', value: 'CAD 25 per 500g package (excl. tax)' },
-    { label: 'Minimum Delivery Unit', value: '50 packages' },
-    { label: 'Supply Situation', value: 'Year-round supply with peak production during summer' },
-    { label: 'Preparation Period', value: '2–3 business days after order confirmation' },
   ];
+
   return (
     <div className="p-4 max-w-6xl mx-auto">
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left column */}
-        <div className="w-full lg:w-1/3 space-y-8">
-          <ProductImageCard images={product?.images ?? []} />
-        </div>
+      {product && (
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left column */}
+          <div className="w-full lg:w-1/3 space-y-8">
+            <ProductImageCard images={product?.images ?? []} />
+          </div>
 
-        {/* Right column */}
-        <div className="w-full lg:w-2/3 space-y-8">
-          <h1 className="text-2xl font-bold mb-1">{product?.productName}</h1>
-          <p className="mb-2 text-wrap">{product?.featuresDesc}</p>
-          <button type="button" className="rounded-2xl bg-primary px-3 py-1 mr-1 text-white">
-            hashtag1
-          </button>
-          <button type="button" className="rounded-2xl bg-primary px-3 py-1 mr-1 text-white">
-            hashtag2
-          </button>
-          <button type="button" className="rounded-2xl bg-primary px-3 py-1 mr-1 text-white">
-            hashtag3
-          </button>
-          <h2 className="text-xl font-bold">PRODUCT INFORMATION</h2>
-          <ProductTable data={productInfo} headerBgColor="bg-secondary" />
+          {/* Right column */}
+          <div className="w-full lg:w-2/3 space-y-8">
+            <h1 className="text-3xl font-bold">{product?.productName}</h1>
+            <p className="mb-3 text-wrap">{product?.featuresDesc}</p>
+            {hashtags.map((hashtag, index) => (
+              <span
+                key={index}
+                className="rounded-2xl bg-primary px-3 py-1 mr-1 text-white text-sm"
+              >
+                {hashtag}
+              </span>
+            ))}
+            <h2 className="text-xl font-bold !my-3">PRODUCT INFORMATION</h2>
+            <ProductTable data={productInfo} headerBgColor="bg-secondary" />
+          </div>
         </div>
-      </div>
+      )}
 
       <RecommendSection />
     </div>
