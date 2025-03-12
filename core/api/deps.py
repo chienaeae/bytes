@@ -1,16 +1,14 @@
-from typing import Annotated, Generator
-
+from typing import Annotated, Generator, AsyncGenerator
 from google import genai
 
 from fastapi import Depends
-from sqlmodel import Session
-
+from sqlalchemy.ext.asyncio import AsyncSession
 from core.vector_db import VectorSession, vector_session
 from core.config import settings
-from core.db import engine
+from core.db import async_engine
 
-def get_db() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSession(async_engine) as session:
         yield session
 
 def get_ai_client() -> Generator[genai.Client, None, None]:
@@ -21,6 +19,6 @@ def get_vector_session() -> Generator[VectorSession, None, None]:
     yield vector_session
 
 
-SessionDep = Annotated[Session, Depends(get_db)]
+SessionDep = Annotated[AsyncSession, Depends(get_db)]
 AIClientDep = Annotated[genai.Client, Depends(get_ai_client)]
 VectorSessionDep = Annotated[VectorSession, Depends(get_vector_session)]
