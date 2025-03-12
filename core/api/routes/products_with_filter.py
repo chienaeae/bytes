@@ -73,7 +73,9 @@ async def get_products(
     if hid:
         statement = statement.where(Product.healthclaims.any(Healthclaim.healthclaim_id.in_(hid)))
 
-    products = session.exec(statement=statement).unique().all()
+    result = await session.scalars(statement=statement)
+    products = result.unique().all()
+    session.commit()
 
     material_categories = {}
     material_forms = {}

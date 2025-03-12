@@ -23,7 +23,8 @@ async def get_product(product_id: str, session: SessionDep):
             joinedload(Product.images)
         )
     )
-    product = session.exec(statement=statement).unique().one_or_none()
+    result = await session.scalars(statement=statement)
+    product = result.unique().one_or_none()
     session.commit()
 
     if product is None:
