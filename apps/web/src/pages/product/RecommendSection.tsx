@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { NavLink } from 'react-router';
 
 import { ProductCard } from '@/components/card/ProductCard';
+import { FilterKey, FilterOptionItem } from '@/model/filter-option';
 import { Image } from '@/model/image';
 import { Product } from '@/model/product';
 import { ProductCardProps } from '@/model/product-card';
 
 import { useProducts } from '../home/useProducts';
 
-export default function RecommendSection() {
-  const { products } = useProducts({ searchTerm: '', selectedFilterOptions: {} });
-  const [recommendations, setRecommendations] = useState<ProductCardProps[]>([]);
+const selectedFilterOptions: Partial<Record<FilterKey, FilterOptionItem[]>> = {};
+interface RecommendSectionProps {
+  productId: string;
+}
 
-  useEffect(() => {
-    if (products.length === 0) return;
+export default function RecommendSection({ productId }: RecommendSectionProps) {
+  const { products, isLoading, error } = useProducts({ searchTerm: '', selectedFilterOptions });
+  const recommendations = useMemo<ProductCardProps[]>(() => {
+    if (isLoading || error || products.length === 0) return [];
 
-    const shuffled = [...products]
+    const filteredProducts = products.filter((product) => product.productId !== productId);
+
+    return [...filteredProducts]
       .sort(() => 0.5 - Math.random())
       .slice(0, 3)
       .map((product: Product) => ({
@@ -28,9 +34,7 @@ export default function RecommendSection() {
           product.images[0]?.imageUrl ||
           '/placeholder.svg',
       }));
-
-    setRecommendations(shuffled);
-  }, [products]);
+  }, [error, isLoading, products, productId]);
 
   return (
     <section className="mt-16">

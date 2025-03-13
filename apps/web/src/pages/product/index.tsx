@@ -46,6 +46,10 @@ export default function ProductPage() {
     { label: 'Manufacturing Location', value: product?.manufacturingLocation ?? 'N/A' },
   ];
 
+  if (!id) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <div className="p-4 max-w-6xl mx-auto">
       {product && (
@@ -75,7 +79,7 @@ export default function ProductPage() {
         </div>
       )}
 
-      <RecommendSection />
+      <RecommendSection productId={id} />
     </div>
   );
 }
