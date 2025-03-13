@@ -1,33 +1,16 @@
+import Autoplay from 'embla-carousel-autoplay';
+import { useRef } from 'react';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 export function NewsCarousel() {
-  const newsItems = [
-    {
-      id: 1,
-      title: 'News Title 1',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing ut labore et dolore elit.',
-      image: 'https://fakeimg.pl/300/?text=1',
-    },
-    {
-      id: 2,
-      title: 'News Title 2',
-      description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      image: 'https://fakeimg.pl/300/?text=2',
-    },
-    {
-      id: 3,
-      title: 'News Title 3',
-      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-      image: 'https://fakeimg.pl/300/?text=3',
-    },
-    {
-      id: 4,
-      title: 'News Title 4',
-      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse.',
-      image: 'https://fakeimg.pl/300/?text=4',
-    },
-  ];
+  const plugin = useRef(
+    Autoplay({
+      delay: 2000,
+      stopOnInteraction: true,
+    })
+  );
 
   return (
     <section className="container mx-auto mb-10">
@@ -37,19 +20,20 @@ export function NewsCarousel() {
           align: 'start',
           loop: true,
         }}
+        plugins={[plugin.current]}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
         className="w-full"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
-          {newsItems.map((item) => (
-            <CarouselItem key={item.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+          {[...Array(4)].map((_, idx) => (
+            <CarouselItem key={idx} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
               <Card>
                 <CardContent className="p-0">
                   <div
-                    className="aspect-[16/9] bg-muted rounded-t-lg"
+                    className="aspect-[4/3] rounded-lg bg-contain bg-gray"
                     style={{
-                      backgroundImage: `url(${item.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
+                      backgroundImage: `url("/news/ad_${idx}.jpg")`,
                     }}
                   />
                 </CardContent>

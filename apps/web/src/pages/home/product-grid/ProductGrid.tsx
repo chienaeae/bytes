@@ -4,6 +4,7 @@ import { NavLink } from 'react-router';
 import { ProductCard } from '@/components/card/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/model/product';
+import { ProductCardProps } from '@/model/product-card';
 
 interface ProductGridProps {
   products: Product[];
@@ -17,7 +18,7 @@ export function ProductGrid({ products }: ProductGridProps) {
     setShowAll(false);
   }, [products]);
 
-  const items = products.map((product) => ({
+  const items: ProductCardProps[] = products.map((product) => ({
     id: product.productId,
     title: product.productName,
     description: product.featuresDesc,

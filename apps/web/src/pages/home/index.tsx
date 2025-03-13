@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-import main_banner from '@/assets/main_banner.png';
 import { FilterForm } from '@/components/filter-form/FilterForm';
 import { NewsCarousel } from '@/components/news-carousel';
 import { SearchBar } from '@/components/search-bar/SearchBar';
@@ -45,7 +44,7 @@ export function HomePage() {
   return (
     <div className="container mx-auto">
       <div className="relative bg-white p-10 flex items-center gap-16 2xl:gap-28 break-words">
-        <img src={main_banner} alt="main banner" className="w-[50%] object-cover" />
+        <img src="/main_banner.png" alt="main banner" className="w-[50%] object-cover" />
         <div>
           <h1 className="font-bold text-5xl dark:text-black text-balance">
             Bridging gaps, Building sustainable food systems

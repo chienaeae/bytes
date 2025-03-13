@@ -5,8 +5,7 @@ const teamMembers = [
     description:
       'Combines agricultural technology and data-driven problem-solving to develop sustainable, impactful solutions.',
     quote: 'In the dance of ingredients, I find harmony, creativity, and purpose.',
-    image:
-      'https://media.licdn.com/dms/image/v2/D4D35AQEBvRFsSMhMaQ/profile-framedphoto-shrink_800_800/profile-framedphoto-shrink_800_800/0/1737581042117?e=1742108400&v=beta&t=b6_kR-lxJKxgiQ0IqauaQJ846a5OMj3D_I5gxdCFCmA',
+    image: '/photos/yu-ting.jpg',
   },
   {
     name: 'Daniel Choi',
@@ -20,7 +19,7 @@ const teamMembers = [
   },
   {
     name: 'Chia-Yu (Philly) Chien',
-    role: 'Full-Stack Developer',
+    role: 'Software Engineer',
     description:
       'Blends creativity and precision in development, ensuring seamless integration of technology and design for user-friendly experiences.',
     quote: 'Food, like the stars, aligns perfectly when you find the right balance of flavors.',
