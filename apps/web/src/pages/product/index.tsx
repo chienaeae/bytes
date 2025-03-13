@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useParams } from 'react-router';
 
 import { Product } from '@/model/product';
 import { getProducts } from '@/service/core/products';
@@ -10,8 +10,7 @@ import RecommendSection from './RecommendSection';
 
 export default function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
-  const location = useLocation();
-  const id = location.pathname.split('/').pop();
+  const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
       if (!id) {
