@@ -1,11 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-
-interface ProductCardProps {
-  title: string;
-  description: string;
-  contentWeight: string;
-  imageUrl: string;
-}
+import { ProductCardProps } from '@/model/product-card';
 
 export function ProductCard({ title, description, contentWeight, imageUrl }: ProductCardProps) {
   return (

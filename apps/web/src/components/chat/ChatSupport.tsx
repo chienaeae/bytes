@@ -25,22 +25,7 @@ export default function ChatSupport() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: '1',
-      content: 'Hello, how has your day been?',
-      role: 'user',
-    },
-    {
-      id: '2',
-      content: 'I am doing well, thank you for asking. How can I help you today?',
-      role: 'assistant',
-    },
-    {
-      id: '3',
-      content: 'I am doing well, thank you for asking. How can I help you today?',
-      role: 'user',
-    },
-    {
-      id: '4',
-      content: 'I am doing well, thank you for asking. How can I help you today?',
+      content: 'How can I help you today?',
       role: 'assistant',
     },
   ]);
