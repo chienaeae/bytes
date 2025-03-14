@@ -25,7 +25,6 @@ async def get_product(product_id: str, session: SessionDep):
     )
     result = await session.scalars(statement=statement)
     product = result.unique().one_or_none()
-    session.commit()
 
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
