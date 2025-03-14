@@ -75,7 +75,6 @@ async def get_products(
 
     result = await session.scalars(statement=statement)
     products = result.unique().all()
-    session.commit()
 
     material_categories = {}
     material_forms = {}

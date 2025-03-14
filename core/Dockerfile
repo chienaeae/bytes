@@ -40,4 +40,4 @@ EXPOSE 8000
 
 WORKDIR /
 
-CMD ["gunicorn", "core.main:app", "-k", "uvicorn.workers.UvicornWorker", "-w", "4", "-b", "0.0.0.0:8000", "--timeout", "30", "--preload"]
+CMD ["gunicorn", "core.main:app", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000", "--timeout", "30", "--preload"]
