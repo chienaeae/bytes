@@ -230,7 +230,7 @@ export default function ContactUs() {
             <CardContent>
               <div className="aspect-video relative rounded-lg overflow-hidden border-2 border-muted mb-4">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0927348749!2d-122.41941638468864!3d37.77492997975903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0xb10ed6d9b5050fa5!2sTwitter%20HQ!5e0!3m2!1sen!2sus!4v1648641118777!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2879.8833626654427!2d-79.35116672409501!3d43.79603324318156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4d31babbf5ce7%3A0x5812aa25d9fb9912!2sSeneca%20Polytechnic%20Newnham%20Campus!5e0!3m2!1szh-TW!2sca!4v1742056567427!5m2!1szh-TW!2sca"
                   className="absolute inset-0 w-full h-full"
                   style={{ border: 0 }}
                   allowFullScreen
@@ -238,9 +238,9 @@ export default function ContactUs() {
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
-              <p className="font-medium">123 Awesome Street</p>
-              <p className="text-muted-foreground">San Francisco, CA 94103</p>
-              <p className="text-muted-foreground">United States</p>
+              <p className="font-medium">1750 Finch Ave E</p>
+              <p className="text-muted-foreground">North York, ON M2J 2X5</p>
+              <p className="text-muted-foreground">Canada</p>
             </CardContent>
           </Card>
 
