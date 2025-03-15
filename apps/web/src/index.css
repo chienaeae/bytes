@@ -185,6 +185,9 @@
     h4 {
       @apply scroll-m-20 text-lg font-semibold tracking-tight;
     }
+    a {
+      @apply text-primary underline;
+    }
     p {
       @apply leading-6 [&:not(:first-child)]:mt-3;
     }
