@@ -66,7 +66,7 @@ export const useProducts = ({ searchTerm, selectedFilterOptions }: UseProductsPr
     };
 
     fetchData();
-  }, [searchTerm, JSON.stringify(selectedFilterOptions)]);
+  }, [searchTerm, selectedFilterOptions]);
 
   return { filterOptions, products, error, isLoading };
 };
