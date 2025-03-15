@@ -1,5 +1,7 @@
 import { X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { ChatResizeTextarea } from '@/components/chat/chat-resize-textarea/ChatResizeTextarea';
 import { ChatBubble, ChatBubbleMessage } from '@/components/ui/chat/chat-bubble';
@@ -10,6 +12,7 @@ import {
   ExpandableChatFooter,
   ExpandableChatHeader,
 } from '@/components/ui/chat/expandable-chat';
+import { cn } from '@/lib/utils';
 import { streamChat } from '@/service/core/chat';
 
 interface ChatMessage {
@@ -120,8 +123,9 @@ export default function ChatSupport() {
                     <ChatBubbleMessage
                       variant={message.role === 'user' ? 'sent' : 'received'}
                       isLoading={message.isLoading}
+                      className={cn('markdown', 'overflow-x-auto')}
                     >
-                      {message.content}
+                      <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
                     </ChatBubbleMessage>
                   </ChatBubble>
                 ))}

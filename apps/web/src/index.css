@@ -170,3 +170,56 @@
     box-shadow: var(--primary) 0px 13px 27px -4px;
   }
 }
+
+@layer components {
+  .markdown {
+    h1 {
+      @apply scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl;
+    }
+    h2 {
+      @apply scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0;
+    }
+    h3 {
+      @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+    h4 {
+      @apply scroll-m-20 text-lg font-semibold tracking-tight;
+    }
+    p {
+      @apply leading-6 [&:not(:first-child)]:mt-3;
+    }
+    blockquote {
+      @apply mt-6 border-l-2 pl-6 italic;
+    }
+    ul {
+      @apply ml-4 list-disc [&>li]:mt-2;
+    }
+    code {
+      @apply relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+    }
+    p.lead {
+      @apply text-xl text-muted-foreground;
+    }
+    div.large {
+      @apply text-lg font-semibold;
+    }
+    small {
+      @apply text-sm text-muted-foreground;
+    }
+    table {
+      @apply w-full;
+    }
+    tr {
+      @apply m-0 border-t p-0 even:bg-muted;
+    }
+    th {
+      @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+    }
+    tr {
+      @apply m-0 border-t p-0 even:bg-muted;
+    }
+    td {
+      @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+    }
+  }
+}
