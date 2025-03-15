@@ -37,6 +37,7 @@ async def prepare_vector_db():
         for product in products:
             product_detail = ProductDetail.model_validate(product)
             data = product_detail.model_dump(mode="json", by_alias=True)
+            data["productLink"] = f"http://172.178.36.76:5000/product/{product.product_id}"
             data_str = json.dumps(data)
             
             retries = 3

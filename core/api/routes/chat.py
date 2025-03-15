@@ -36,7 +36,7 @@ async def ask_gemini_generator(client: AIClientDep, context, input_text):
     If the context contains the answer, reply concisely using the provided details.
     If the context does not have the answer, say: "I'm sorry, I don't have enough details."
 
-    Keep the response around 30 words. 
+    Keep the response around 30 words, and use product name as link's label.
     Use markdown formatting and split into multiple paragraphs if needed. 
     Use bold for important information.
     """
