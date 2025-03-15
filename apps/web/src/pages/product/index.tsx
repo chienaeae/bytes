@@ -9,6 +9,7 @@ import ProductTable from './ProductTable';
 import RecommendSection from './RecommendSection';
 
 export default function ProductPage() {
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyDDe7gzMQHgqjltST4_lk1J7RZlp8WkjQI';
   const [product, setProduct] = useState<Product | null>(null);
   const { id } = useParams();
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function ProductPage() {
     { label: 'Supplier', value: product?.suppliers[0]?.supplierName ?? 'N/A' },
     { label: 'Place of Origin', value: product?.placeOfOrigin ?? 'N/A' },
     { label: 'Manufacturing Location', value: product?.manufacturingLocation ?? 'N/A' },
+    { label: 'Best Before Date', value: '2025/05/01' },
   ];
 
   if (!id) {
@@ -74,6 +76,22 @@ export default function ProductPage() {
             </div>
             <h2 className="text-xl font-bold !my-3">PRODUCT INFORMATION</h2>
             <ProductTable data={productInfo} headerBgColor="bg-secondary" />
+
+            {product?.manufacturingLocation && (
+              <div className="mt-6">
+                <h2 className="text-xl font-bold mb-3">Manufacturing Location</h2>
+                <iframe
+                  title="Manufacturing Location"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                  src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(
+                    product.manufacturingLocation
+                  )}`}
+                  className="rounded-lg shadow-lg w-full h-[300px]"
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

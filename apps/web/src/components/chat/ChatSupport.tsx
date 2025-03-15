@@ -28,7 +28,7 @@ export default function ChatSupport() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: '1',
-      content: 'How can I help you today?',
+      content: `Hi I'm your AI assistant.You are welcome to consult me for **detailed product information** and **strategic product development advice**. How can I help you today?`,
       role: 'assistant',
     },
   ]);
