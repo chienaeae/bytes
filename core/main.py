@@ -13,6 +13,29 @@ from core.db import async_engine
 from core.api.routes import chat, products, products_with_filter
 from core.config import settings
 
+def convert_product_details_to_data_str(product_detail: ProductDetail) -> str:
+    applications = ", ".join(app.application_name for app in product_detail.applications)
+    ingredients = ", ".join(ing.ingredients_name for ing in product_detail.ingredients)
+    suppliers = ", ".join(sup.supplier_name for sup in product_detail.suppliers)
+    healthclaims = ", ".join(hc.healthclaim_name for hc in product_detail.healthclaims)
+    images = ", ".join(img.image_url for img in product_detail.images)
+    return (
+        f"Product Name: {product_detail.product_name}\n"
+        f"Origin: {product_detail.place_of_origin}\n"
+        f"Manufacturing Location: {product_detail.manufacturing_location}\n"
+        f"Weight/Volume: {product_detail.weight_volume}\n"
+        f"Features: {product_detail.features_desc}\n"
+        f"Material Category: {product_detail.material_cat.material_cat_name}\n"
+        f"Material Form: {product_detail.material_form.material_form_name}\n"
+        f"Applications: {applications or 'None'}\n"
+        f"Ingredients: {ingredients or 'None'}\n"
+        f"Suppliers: {suppliers or 'None'}\n"
+        f"Health Claims: {healthclaims or 'None'}\n"
+        f"Images: {images or 'None'}\n"
+        f"Product Link: http://172.178.36.76:5000/product/{product_detail.product_id}"
+    )
+
+
 async def prepare_vector_db():
     async with AsyncSession(async_engine) as session:
         collection = vector_session.get_product_collection()
@@ -36,9 +59,7 @@ async def prepare_vector_db():
 
         for product in products:
             product_detail = ProductDetail.model_validate(product)
-            data = product_detail.model_dump(mode="json", by_alias=True)
-            data["productLink"] = f"http://172.178.36.76:5000/product/{product.product_id}"
-            data_str = json.dumps(data)
+            data_str = convert_product_details_to_data_str(product_detail)
             
             retries = 3
             for attempt in range(retries):
