@@ -26,14 +26,14 @@ export function NewsCarousel() {
         className="w-full"
       >
         <CarouselContent className="-ml-2 md:-ml-4">
-          {[...Array(4)].map((_, idx) => (
+          {[...Array(6)].map((_, idx) => (
             <CarouselItem key={idx} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
               <Card>
                 <CardContent className="p-0">
                   <div
                     className="aspect-[4/3] rounded-lg bg-contain bg-gray"
                     style={{
-                      backgroundImage: `url("/news/ad_${idx}.jpg")`,
+                      backgroundImage: `url("/news/ad_${idx + 1}.jpg")`,
                     }}
                   />
                 </CardContent>

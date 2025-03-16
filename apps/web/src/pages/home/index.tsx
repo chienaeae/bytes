@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
+import CanadaMap from '@/components/bubble-map/CanadaMap';
 import { FilterForm } from '@/components/filter-form/FilterForm';
 import { NewsCarousel } from '@/components/news-carousel';
 import { SearchBar } from '@/components/search-bar/SearchBar';
@@ -77,6 +78,7 @@ export function HomePage() {
         </div>
         <ProductGrid products={products} />
       </div>
+      <CanadaMap />
     </div>
   );
 }
