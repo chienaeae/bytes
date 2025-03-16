@@ -25,21 +25,28 @@ def retrieve_from_vector_db(vector_session: VectorSessionDep, ai_client: AIClien
     return results["documents"][0]
 
 async def ask_gemini_generator(client: AIClientDep, context, input_text):
-    prompt =  f"""
-    You are an AI assistant answering product-related questions. 
-    Use the following retrieved product information to generate a concise response.
+    prompt =  f"""You are an AI assistant answering product-related questions. 
+Use the following retrieved product information to generate a concise and helpful response.
 
-    Below is the relevant product information retrieved from the database: "{context}"
+Below is the relevant product information retrieved from the database: "{context}"
 
-    The user asked: "{input_text}"
+The user asked: "{input_text}"
     
-    If the context contains the answer, reply concisely using the provided details.
-    If the context does not have the answer, say: "I'm sorry, I don't have enough details."
+- If the retrieved context contains the answer, respond concisely and accurately using the provided details.
+- If the context does not contain the answer:
+  - Acknowledge the user's question politely.
+  - Inform them that the requested product is not available in our company.
+  - Suggest alternative products (if applicable) or advise consulting an appropriate source for more details.
+  - Maintain a friendly and professional tone.
 
-    Keep the response around 30 words, and use product name as link's label.
-    Use markdown formatting and split into multiple paragraphs if needed. 
-    Use bold for important information.
-    """
+Ensure the response represents the company's perspective, using "We" instead of "I". 
+Response should be clear, natural, and customer-friendly, while keeping it around 30 words.
+
+For the format of the response:
+- Use product name as link's label.
+- Use markdown formatting and split into multiple paragraphs if needed. 
+- Use bold for important information.
+"""
 
     yield json.dumps({'status': 'start'}) + "\n"
     buffer = ""
