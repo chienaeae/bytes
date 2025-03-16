@@ -31,7 +31,6 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
   height = '620',
   viewBox = '0 0 760 620',
 }) => {
-  const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
   const [season, setSeason] = useState<'Spring' | 'Summer' | 'Fall' | 'Winter'>('Spring');
 
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -57,23 +56,16 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
     svg.selectAll('*').remove();
 
     // Render provinces on the map
-    const provinces = svg
+    svg
       .selectAll('path')
       .data(canadaData as ProvinceData[])
       .enter()
       .append('path')
       .attr('d', (d: ProvinceData) => d.d) // Set the path data for each province
       .attr('class', (d: ProvinceData) => d.id) // Assign a class based on province ID
-      .attr('fill', (d: ProvinceData) => (selectedProvince === d.id ? 'navy' : 'lightblue')) // Highlight selected province
-      .attr('stroke', '#838383') // Add border color
-      .attr('stroke-width', 1.5) // Set border width
-      .on('click', (event: MouseEvent, d: ProvinceData) => {
-        // Toggle province selection on click
-        setSelectedProvince(d.id === selectedProvince ? null : d.id);
-      });
-
-    // Update province colors when the selectedProvince changes
-    provinces.attr('fill', (d: ProvinceData) => (selectedProvince === d.id ? 'navy' : 'lightblue'));
+      .attr('fill', 'lightblue')
+      .attr('stroke', '#838383')
+      .attr('stroke-width', 1.5);
 
     // Filter crop data based on the current season
     const filteredCrops: CropData[] = cropData.filter((crop) => crop.season === season);
@@ -89,17 +81,17 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
             .attr('cx', (d: CropData) => d.coordinates[0]) // Set x-coordinate
             .attr('cy', (d: CropData) => d.coordinates[1]) // Set y-coordinate
             .attr('r', (d: CropData) => sizeScale(d.size)) // Set bubble size based on crop size
-            .attr('fill', 'rgba(0, 128, 0, 0.7)') // Set bubble color
-            .attr('stroke', '#000') // Add border color
-            .attr('stroke-width', 0.5) // Set border width
-            .attr('class', 'hover:cursor-pointer'), // Add hover effect
+            .attr('fill', 'rgba(0, 128, 0, 0.7)')
+            .attr('stroke', '#000')
+            .attr('stroke-width', 0.5)
+            .attr('class', 'hover:cursor-pointer'),
         (update) => update, // Handle updates
         (exit) => exit.remove() // Remove bubbles that are no longer needed
       );
 
     // Add tooltip interactions for bubbles
     bubbles
-      .on('mouseover', (event: MouseEvent, d: CropData) => {
+      .on('mouseover', (_, d: CropData) => {
         tooltip
           .style('opacity', 1)
           .style('display', 'block')
@@ -120,7 +112,7 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
         // Hide tooltip when mouse leaves the bubble
         tooltip.style('opacity', 0).style('display', 'none');
       });
-  }, [selectedProvince, season]); // Re-run effect when selectedProvince or season changes
+  }, [season, sizeScale]);
 
   return (
     <div className="text-center relative">
@@ -144,10 +136,7 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
         className="mx-auto"
         xmlns="http://www.w3.org/2000/svg"
       />
-      <div
-        ref={tooltipRef}
-        className="absolute bg-white py-1 px-2 rounded shadow-lg none z-[1000]"
-      />
+      <div ref={tooltipRef} className="absolute bg-white py-1 px-2 rounded shadow-lg z-[1000]" />
     </div>
   );
 };
