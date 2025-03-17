@@ -1,14 +1,12 @@
 import { NavLink } from 'react-router';
 
-import logo from '@/assets/logo.svg';
-
 export default function Footer() {
   return (
     <footer className="bg-background mt-5 p-4 border-t-2">
       <div className="container mx-auto flex sm:flex-row flex-col">
         <div className="flex md:flex-col md:w-3/4 justify-evenly gap-3 md:items-start items-center">
           <NavLink to="/">
-            <img src={logo} alt="logo" className="h-12" />
+            <img src="/logo.png" alt="logo" className="h-12" />
           </NavLink>
           <p className="text-lg font-semibold text-balance">
             Bites Team – Harvesting Innovation, Cultivating the Future.
