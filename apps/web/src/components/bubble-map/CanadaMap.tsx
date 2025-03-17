@@ -63,8 +63,8 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
       .append('path')
       .attr('d', (d: ProvinceData) => d.d) // Set the path data for each province
       .attr('class', (d: ProvinceData) => d.id) // Assign a class based on province ID
-      .attr('fill', 'lightblue')
-      .attr('stroke', '#838383')
+      .attr('fill', 'none')
+      .attr('stroke', 'black')
       .attr('stroke-width', 1.5);
 
     // Filter crop data based on the current season
@@ -81,10 +81,8 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
             .attr('cx', (d: CropData) => d.coordinates[0]) // Set x-coordinate
             .attr('cy', (d: CropData) => d.coordinates[1]) // Set y-coordinate
             .attr('r', (d: CropData) => sizeScale(d.size)) // Set bubble size based on crop size
-            .attr('fill', 'rgba(0, 128, 0, 0.7)')
-            .attr('stroke', '#000')
-            .attr('stroke-width', 0.5)
-            .attr('class', 'hover:cursor-pointer'),
+            .attr('fill', 'oklch(67.11% 0.2188 38.18)')
+            .attr('class', 'hover:cursor-pointer opacity-90'),
         (update) => update, // Handle updates
         (exit) => exit.remove() // Remove bubbles that are no longer needed
       );
@@ -116,8 +114,8 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
 
   return (
     <div className="text-center relative">
-      <h2 className="text-xl font-bold">Canada Crop Production - {season}</h2>
-      <div className="flex justify-center my-4 space-x-2">
+      <h2 className="text-2xl font-bold my-6 text-center">Canada Crop Production - {season}</h2>
+      <div className="flex justify-center gap-4">
         {(['Spring', 'Summer', 'Fall', 'Winter'] as const).map((s) => (
           <button
             key={s}
@@ -128,15 +126,18 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
           </button>
         ))}
       </div>
-      <svg
-        ref={svgRef}
-        width={width}
-        height={height}
-        viewBox={viewBox}
-        className="mx-auto"
-        xmlns="http://www.w3.org/2000/svg"
-      />
-      <div ref={tooltipRef} className="absolute bg-white py-1 px-2 rounded shadow-lg z-[1000]" />
+      <div className="relative flex justify-center items-center w-[760px] h-[620px] mx-auto">
+        <img src="/Flag_of_Canada.svg" className="w-[90%] opacity-10" alt="Canada Flag" />
+        <svg
+          ref={svgRef}
+          width={width}
+          height={height}
+          viewBox={viewBox}
+          className="mx-auto absolute"
+          xmlns="http://www.w3.org/2000/svg"
+        />
+        <div ref={tooltipRef} className="absolute bg-white py-1 px-2 rounded shadow-lg z-[1000]" />
+      </div>
     </div>
   );
 };

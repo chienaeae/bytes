@@ -4,7 +4,6 @@ import { Menu, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 
-import logo from '@/assets/logo.svg';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '@/components/ui/sheet';
@@ -33,7 +32,7 @@ export function Header() {
         <div className="container flex items-center justify-between min-w-full">
           {/* Logo */}
           <NavLink to="/">
-            <img src={logo} alt="logo" className="h-10" />
+            <img src="/logo.png" alt="logo" className="h-10" />
           </NavLink>
 
           {/* Desktop Navigation - on the right side */}
