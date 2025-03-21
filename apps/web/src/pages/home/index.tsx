@@ -60,7 +60,7 @@ export function HomePage() {
       </div>
       <NewsCarousel />
       <div className="flex gap-10 container mx-auto mt-20 px-15">
-        <div className="w-2/7" ref={filterFormRef}>
+        <div className="w-2/6" ref={filterFormRef}>
           <SearchBar
             value={searchTerm}
             onChange={handleSearch}
