@@ -4,12 +4,13 @@ const teamMembers = [
     role: 'Data Scientist & AgriTech Specialist',
     description:
       'Combines agricultural technology and data-driven problem-solving to develop sustainable, impactful solutions.',
-    quote: 'In the dance of ingredients, I find harmony, creativity, and purpose.',
+    quote:
+      'Technology empowers smarter decision-making processes and greater efficiency across the value chain.',
     image: '/photos/yu-ting.jpg',
   },
   {
     name: 'Daniel Choi',
-    role: 'Business Analyst',
+    role: 'Strategic Analyst',
     description:
       'Identifies strategic opportunities to ensure impactful, sustainable projects that thrive in the real world.',
     quote:
@@ -42,8 +43,7 @@ const teamMembers = [
       'Develops AI-driven solutions to enhance information retrieval, provide actionable insights, and advance the sustainable use of agricultural byproducts.',
     quote:
       'I approach food like an engineer—leveraging AI to design flavor structures that are precise, balanced, and innovative.',
-    image:
-      'https://media.licdn.com/dms/image/v2/D5603AQGy6A4tgayctA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1666460147259?e=1747267200&v=beta&t=V-BFjrjeKYkW5J2FCLvdbWmqMd42RW91_yEuYB_TOoY',
+    image: '/photos/Alan.jpg',
   },
   {
     name: 'Bonnie Wan',
@@ -58,23 +58,28 @@ const teamMembers = [
 
 export function AboutPage() {
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="container mx-auto py-12">
       <section className="text-center mb-10">
         <h1 className="text-4xl font-bold text-primary mb-4">About Us</h1>
-        <p className="text-lg text-border/80 max-w-2xl mx-auto">
+        <p className="text-lg text-border/80 max-w-4xl mx-auto">
           From the fields of agriculture to lines of code, and the strategies that drive growth, the
           Bites Team brings together diverse talents. Five innovators have joined forces, blending
           bites and bytes to tackle real-world challenges through technology and craft sustainable
           solutions at the Seneca Hackathon.
         </p>
+        <img
+          src="/bites_framework.jpg"
+          alt="bites framework"
+          className="w-[90%] mx-auto mt-10"
+        ></img>
       </section>
       <section>
         <h1 className="text-4xl text-center font-bold text-primary mb-4">Meet Our Team</h1>
-        <div className="flex flex-rol gap-10 flex-wrap ">
+        <div className="flex flex-rol gap-10 flex-wrap justify-center">
           {teamMembers.map((member, index) => (
             <div
               key={index}
-              className="flex flex-col md:flex-row gap-6 p-6 rounded-lg dark:bg-black shadow-neumorphic min-h-78 2xl:min-h-66 2xl:max-w-2xl lg:max-w-xl max-w-xs mx-auto"
+              className="flex flex-col md:flex-row gap-6 p-6 rounded-lg dark:bg-black shadow-neumorphic min-h-78 2xl:min-h-66 2xl:max-w-2xl lg:max-w-xl max-w-xs"
             >
               <img
                 src={member.image}
