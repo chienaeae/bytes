@@ -29,20 +29,20 @@ export function ProductGrid({ products }: ProductGridProps) {
       '',
   }));
 
-  const visibleProducts = showAll ? items : items.slice(0, 9);
+  const visibleProducts = showAll ? items : items.slice(0, 12);
 
   return (
     <div className="container mx-auto">
       {hasProduct ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {visibleProducts.map((item) => (
               <NavLink to={`/product/${item.id}`} className="w-full h-full" key={item.id}>
                 <ProductCard {...item} />
               </NavLink>
             ))}
           </div>
-          {products.length > 9 && !showAll && (
+          {products.length > 12 && !showAll && (
             <div className="flex justify-center my-5">
               <Button
                 variant="ghost"

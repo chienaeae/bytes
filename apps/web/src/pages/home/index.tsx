@@ -47,10 +47,8 @@ export function HomePage() {
       <div className="relative bg-white p-10 flex items-center gap-16 2xl:gap-28 break-words">
         <img src="/main_banner.png" alt="main banner" className="w-[50%] object-cover" />
         <div>
-          <h1 className="font-bold text-5xl dark:text-black text-balance">
-            Bridging gaps, Building sustainable food systems
-          </h1>
-          <p className="text-xl mb-6 mt-3 dark:text-black">
+          <h1 className="font-bold text-5xl text-border text-balance">Waste to Worth</h1>
+          <p className="text-xl mb-6 mt-3 text-border">
             Unlocking the full potential of ingredients and partnerships
           </p>
           <SearchBar
@@ -61,8 +59,8 @@ export function HomePage() {
         </div>
       </div>
       <NewsCarousel />
-      <div className="flex gap-10">
-        <div className="w-3/7" ref={filterFormRef}>
+      <div className="flex gap-10 container mx-auto mt-20 px-15">
+        <div className="w-2/7" ref={filterFormRef}>
           <SearchBar
             value={searchTerm}
             onChange={handleSearch}
