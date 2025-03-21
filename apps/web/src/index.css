@@ -167,7 +167,7 @@
   }
 
   .shadow-float:hover {
-    box-shadow: var(--primary) 0px 13px 27px -4px;
+    box-shadow: var(--primary) 0px 10px 10px -2px;
   }
 }
 

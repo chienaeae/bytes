@@ -9,24 +9,10 @@ interface CropData {
 const cropData: CropData[] = [
   // Spring Crops
   {
-    name: 'Asparagus',
-    province: 'Ontario',
-    coordinates: [435.32, 487.19],
-    size: 50,
-    season: 'Spring',
-  },
-  {
-    name: 'Strawberries',
-    province: 'British Columbia',
-    coordinates: [100.67, 400.83],
-    size: 70,
-    season: 'Spring',
-  },
-  {
-    name: 'Maple Syrup',
-    province: 'Quebec',
-    coordinates: [506.91, 451.72],
-    size: 120,
+    name: '',
+    province: '',
+    coordinates: [0, 0],
+    size: 0,
     season: 'Spring',
   },
   // Summer Crops
@@ -69,24 +55,10 @@ const cropData: CropData[] = [
   },
   // Winter Crops
   {
-    name: 'Greenhouse Tomatoes',
-    province: 'British Columbia',
-    coordinates: [105.67, 419.83],
-    size: 60,
-    season: 'Winter',
-  },
-  {
-    name: 'Greenhouse Peppers',
-    province: 'Alberta',
-    coordinates: [172.48, 362.05],
-    size: 50,
-    season: 'Winter',
-  },
-  {
-    name: 'Greenhouse Cucumbers',
-    province: 'Quebec',
-    coordinates: [506.91, 451.72],
-    size: 40,
+    name: '',
+    province: '',
+    coordinates: [0, 0],
+    size: 0,
     season: 'Winter',
   },
 ];

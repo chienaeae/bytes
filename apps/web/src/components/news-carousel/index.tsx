@@ -13,7 +13,7 @@ export function NewsCarousel() {
   );
 
   return (
-    <section className="container mx-auto mb-10">
+    <section className="container mx-auto px-15 mb-10">
       <h2 className="text-2xl font-bold my-6 text-center">NEWS</h2>
       <Carousel
         opts={{
