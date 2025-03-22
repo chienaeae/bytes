@@ -203,7 +203,7 @@ const MultiSelector = ({
 
 const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => {
-    const { value, onValueChange, activeIndex, open } = useMultiSelect();
+    const { value, onValueChange, activeIndex, open, setOpen } = useMultiSelect();
 
     const mousePreventDefault = useCallback((e: React.MouseEvent) => {
       e.preventDefault();
@@ -245,11 +245,13 @@ const MultiSelectorTrigger = forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
           </Badge>
         ))}
         {children}
-        {open ? (
-          <ChevronUp className="w-4 h-4 absolute right-2 bottom-3 text-muted-foreground pointer-events-none" />
-        ) : (
-          <ChevronDown className="w-4 h-4 absolute right-2 bottom-3 text-muted-foreground pointer-events-none" />
-        )}
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="absolute right-2 bottom-3 text-muted-foreground"
+        >
+          {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </button>
       </div>
     );
   }

@@ -43,11 +43,11 @@ export default function Footer() {
                   FAQ
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="/shipping" className="text-primary hover:underline text-sm">
                   Shipping & Returns
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/privacy-policy" className="text-primary hover:underline text-sm">
                   Privacy Policy
