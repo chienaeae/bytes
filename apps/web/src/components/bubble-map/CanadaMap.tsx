@@ -21,14 +21,16 @@ interface CropData {
 }
 
 interface CanadaMapProps {
+  searchTerm?: string;
   width?: string;
   height?: string;
   viewBox?: string;
 }
 
 const CanadaMap: React.FC<CanadaMapProps> = ({
-  width = '760',
-  height = '620',
+  searchTerm,
+  // width = '760',
+  // height = '620',
   viewBox = '0 0 760 620',
 }) => {
   const [season, setSeason] = useState<'Spring' | 'Summer' | 'Fall' | 'Winter'>('Spring');
@@ -104,7 +106,10 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
       })
       .on('mousemove', (event: MouseEvent) => {
         // Update tooltip position based on mouse movement
-        tooltip.style('left', `${event.layerX + 15}px`).style('top', `${event.layerY + 15}px`);
+        tooltip
+          .style('left', `${event.layerX}px`)
+          .style('top', `${event.layerY}px`)
+          .style('background', 'white');
       })
       .on('mouseout', () => {
         // Hide tooltip when mouse leaves the bubble
@@ -114,7 +119,10 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
 
   return (
     <div className="text-center relative">
-      <h2 className="text-2xl font-bold my-6 text-center">Canada Crop Production - {season}</h2>
+      <h2 className="text-2xl font-bold my-6 text-center">
+        Canada {searchTerm ? searchTerm.replace(/^\w/, (c) => c.toUpperCase()) + ' ' : ''}
+        Production - {season}
+      </h2>
       <div className="flex justify-center gap-4">
         {(['Spring', 'Summer', 'Fall', 'Winter'] as const).map((s) => (
           <button
@@ -126,17 +134,20 @@ const CanadaMap: React.FC<CanadaMapProps> = ({
           </button>
         ))}
       </div>
-      <div className="relative flex justify-center items-center w-[760px] h-[620px] mx-auto">
-        <img src="/Flag_of_Canada.svg" className="w-[90%] opacity-10" alt="Canada Flag" />
+      <div className="relative flex justify-center items-center mx-auto my-10 md:w-[70%] aspect-[4/3] sm:w-[50%]">
+        <img
+          src="/Flag_of_Canada.svg"
+          className="md:w-[90%] sm:w-[50%] opacity-10"
+          alt="Canada Flag"
+        />
         <svg
           ref={svgRef}
-          width={width}
-          height={height}
+          width="100%"
           viewBox={viewBox}
           className="mx-auto absolute"
           xmlns="http://www.w3.org/2000/svg"
         />
-        <div ref={tooltipRef} className="absolute bg-white py-1 px-2 rounded shadow-lg z-[1000]" />
+        <div ref={tooltipRef} className="absolute py-1 px-2 rounded shadow-lg" />
       </div>
     </div>
   );

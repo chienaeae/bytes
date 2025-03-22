@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "test": "echo \"No tests specified\" && exit 0",
-    "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./src/@types/resources.d.ts"
+    "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./src/@types/resources.d.ts",
+    "generate:sitemap": "tsx script/generate-sitemap.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
@@ -38,6 +39,8 @@
     "@types/d3-selection": "^3.0.11",
     "@types/geojson": "^7946.0.16",
     "d3-scale": "^4.0.2",
-    "d3-selection": "^3.0.0"
+    "d3-selection": "^3.0.0",
+    "sitemap": "^8.0.0",
+    "tsx": "^4.19.3"
   }
 }

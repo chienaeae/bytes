@@ -44,8 +44,12 @@ export function HomePage() {
 
   return (
     <div className="container mx-auto">
-      <div className="relative bg-white p-10 flex items-center gap-16 2xl:gap-28 break-words">
-        <img src="/main_banner.png" alt="main banner" className="w-[50%] object-cover" />
+      <div className="relative p-10 sm:flex sm:flex-col md:flex-row items-center gap-16 2xl:gap-28 break-words ">
+        <img
+          src="/main_banner.png"
+          alt="main banner"
+          className="md:w-[50%] sm:w-full object-cover"
+        />
         <div>
           <h1 className="font-bold text-5xl text-border text-balance">Waste to Worth</h1>
           <p className="text-xl mb-6 mt-3 text-border">
@@ -59,8 +63,8 @@ export function HomePage() {
         </div>
       </div>
       <NewsCarousel />
-      <div className="flex gap-10 container mx-auto mt-20 px-15">
-        <div className="w-2/6" ref={filterFormRef}>
+      <div className="flex gap-10 container mx-auto mt-20 px-15 sm:flex sm:flex-row flex-col">
+        <div className="md:w-2/6 sm:w-full" ref={filterFormRef}>
           <SearchBar
             value={searchTerm}
             onChange={handleSearch}
@@ -76,7 +80,7 @@ export function HomePage() {
         </div>
         <ProductGrid products={products} />
       </div>
-      <CanadaMap />
+      <CanadaMap searchTerm={searchTerm} />
     </div>
   );
 }
