@@ -1,11 +1,21 @@
 'use client';
 
-import '@arcgis/map-components/dist/components/arcgis-zoom';
-import '@arcgis/map-components/components/arcgis-track';
+import { StrictMode, useEffect } from 'react';
 
-import { StrictMode } from 'react';
+const loadArcGISComponents = async () => {
+  if (typeof window !== 'undefined') {
+    Promise.all([
+      import('@arcgis/map-components/dist/components/arcgis-zoom'),
+      import('@arcgis/map-components/components/arcgis-track'),
+    ]);
+  }
+};
 
 export default function ArcGISMap() {
+  useEffect(() => {
+    loadArcGISComponents();
+  }, []);
+
   return (
     <>
       <h2 className="text-xl font-bold text-center mb-4">Canada Agriculture Map</h2>

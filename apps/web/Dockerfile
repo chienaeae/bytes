@@ -6,6 +6,8 @@ FROM node:22.14-alpine AS builder
 
 WORKDIR /hackthon2025
 
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN npm install -g pnpm
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
