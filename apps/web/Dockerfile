@@ -4,6 +4,8 @@
 
 FROM node:22.14-alpine AS builder
 
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 WORKDIR /hackthon2025
 
 RUN npm install -g pnpm
