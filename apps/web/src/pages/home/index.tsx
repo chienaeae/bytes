@@ -1,10 +1,7 @@
-import '@arcgis/map-components/dist/components/arcgis-map';
-
 import { useCallback, useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-import ArcGISMap from '@/components/bubble-map/ArcGISMap';
-import CanadaMap from '@/components/bubble-map/CanadaMap';
+import ArcGISMap from '@/components/esri/ArcGISMap';
 import { FilterForm } from '@/components/filter-form/FilterForm';
 import { NewsCarousel } from '@/components/news-carousel';
 import { SearchBar } from '@/components/search-bar/SearchBar';
@@ -83,8 +80,7 @@ export function HomePage() {
         </div>
         <ProductGrid products={products} />
       </div>
-      <CanadaMap searchTerm={searchTerm} />
-      <ArcGISMap />
+      <ArcGISMap searchTerm={searchTerm} />
     </div>
   );
 }

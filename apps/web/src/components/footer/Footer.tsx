@@ -2,7 +2,7 @@ import { NavLink } from 'react-router';
 
 export default function Footer() {
   return (
-    <footer className="bg-background mt-5 p-4 border-t-2">
+    <footer className="bg-background mt-5 p-6 border-t-1">
       <div className="container mx-auto flex sm:flex-row flex-col">
         <div className="flex md:flex-col md:w-3/4 justify-evenly gap-3 md:items-start items-center">
           <NavLink to="/">
