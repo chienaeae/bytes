@@ -45,8 +45,10 @@ export function EsriBar({ data, className = '' }: EsriBarProps) {
   return (
     <Card className={cn('w-full h-full hover:shadow-xl transition-shadow duration-300', className)}>
       <CardHeader>
-        <CardTitle>Canada's Biggest 6 Products</CardTitle>
-        <CardDescription>The top 6 products by volume in Canada.</CardDescription>
+        <CardTitle>Top 6 Supply Products in Canada</CardTitle>
+        <CardDescription>
+          Products supplying the biggest volume of supply in Canada.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

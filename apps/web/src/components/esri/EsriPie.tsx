@@ -58,8 +58,8 @@ export function EsriPie({ data, className = '' }: EsriPieProps) {
       )}
     >
       <CardHeader className="pb-0">
-        <CardTitle>Canada's Biggest 5 Products</CardTitle>
-        <CardDescription>Top 5 provinces in Canada by volume.</CardDescription>
+        <CardTitle>Top 5 Supply Provinces in Canada</CardTitle>
+        <CardDescription>Provinces supplying the biggest supply volume.</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
