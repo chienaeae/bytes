@@ -116,8 +116,8 @@ export default function ArcGISMap({ searchTerm = '' }: ArcGISMapProps) {
   return (
     <>
       <h2 className="text-2xl font-bold my-6 text-center">
-        Canada {searchTerm ? searchTerm.replace(/^\w/, (c) => c.toUpperCase()) + ' ' : ''}
-        Production - {selectedSeason}
+        Supply Map {selectedSeason ? `- ${selectedSeason}` : ''}{' '}
+        {searchTerm ? `"${searchTerm.replace(/^\w/, (c) => c.toUpperCase())}"` : ''}
       </h2>
 
       <div className="px-2 grid grid-cols-3 xl:flex justify-center mb-6 gap-2 xl:gap-4">
